@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: GPL-2.0-only
+# SPDX-FileCopyrightText: 2026 KolibriOS team
+
+# Auto-build for cmm_apps: compile every C-- program on push and PR,
+# and fail if any program stops compiling. Unlike the main kolibrios
+# build, no toolchain is built here -- the c-- compiler ships in the
+# repo (c--/c--.elf), so we just run it over each Tupfile.lua target.
+
+name: 'Build C-- programs'
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    name: 'Build (${{ matrix.lang }})'
+    runs-on: kolibri-toolchain
+    # build each language variant in parallel; don't cancel the others on a failure
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [LANG_ENG, LANG_RUS]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Build all C-- programs
+        run: sh build.sh ${{ matrix.lang }}
