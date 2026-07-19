@@ -22,6 +22,7 @@ void main()
 		case evReDraw:
 			sc.get();
 			DefineAndDrawWindow(100, 100, 300, 250, 0x34, sc.work, "Template app", 0);
+			WriteText(10, 10, 0x90, sc.work_text, "Test");
 			GetProcessInfo(#Form, SelfInfo);
 	}
 }
