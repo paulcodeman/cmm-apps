@@ -20,10 +20,15 @@ The heavy lifting is in [`build.sh`](../build.sh):
 * `/D=AUTOBUILD` and the `/D=LANG_*` define are applied exactly as the
   `Tupfile.lua` requests;
 * a target is considered built only if c-- exits 0 **and** produced a
-  non-empty `.com`; a crash (rc 139 — the known input-independent c--
-  flaky segfault) is retried up to 3 times before being reported.
+  non-empty `.com`; a crash or hang (the known heap-layout-dependent c--
+  flakiness) is caught by a per-compile timeout and retried up to 4 times
+  before being reported as a failure.
 
 Language variants `LANG_ENG` and `LANG_RUS` build in parallel.
+
+The compiled `.com` files are collected under `dist/` and published as a
+per-language artifact (`cmm-programs-LANG_ENG` / `cmm-programs-LANG_RUS`),
+downloadable from the run's **Summary** page for 14 days.
 
 ### Running it locally
 

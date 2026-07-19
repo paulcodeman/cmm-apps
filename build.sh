@@ -19,6 +19,9 @@ CMM=${CMM:-"$ROOT/c--/c--.elf"}
 LANG_DEF=${1:-LANG_ENG}
 CMM_TIMEOUT=${CMM_TIMEOUT:-60}   # seconds; a real compile takes <2s, so this only fires on a hang
 CMM_TRIES=${CMM_TRIES:-4}        # retries to absorb the flaky c-- crash/hang
+DIST="$ROOT/dist"                # built binaries are collected here for the CI artifact
+rm -rf "$DIST"
+mkdir -p "$DIST"
 
 if [ ! -x "$CMM" ]; then
 	chmod +x "$CMM" 2>/dev/null || true
@@ -65,6 +68,9 @@ compile_one() {
 	if [ "$rc" -eq 0 ] && [ -s "$d/$out" ]; then
 		pass=$((pass + 1))
 		printf '  ok    %s/%s\n' "$d" "$src"
+		# stash the built binary under dist/ (mirroring the program dir, so
+		# same-named outputs like menu/menu.com and examples/menu.com don't clash)
+		mkdir -p "$DIST/${d#./}" && cp "$d/$out" "$DIST/${d#./}/"
 	else
 		fail=$((fail + 1))
 		failed="$failed $d/$src"

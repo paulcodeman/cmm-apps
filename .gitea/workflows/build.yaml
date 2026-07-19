@@ -34,3 +34,13 @@ jobs:
 
       - name: Build all C-- programs
         run: sh build.sh ${{ matrix.lang }}
+
+      # publish the compiled .com files so they can be downloaded from the
+      # run's Summary page; upload even on failure to keep partial output
+      - name: Upload built programs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cmm-programs-${{ matrix.lang }}
+          path: dist
+          retention-days: 14
