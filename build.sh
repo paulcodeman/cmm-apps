@@ -74,9 +74,12 @@ compile_one() {
 	if [ "$rc" -eq 0 ] && [ -s "$d/$out" ]; then
 		pass=$((pass + 1))
 		printf '  ok    %s/%s\n' "$d" "$src"
-		# stash the built binary under dist/ (mirroring the program dir, so
-		# same-named outputs like menu/menu.com and examples/menu.com don't clash)
-		mkdir -p "$DIST/${d#./}" && cp "$d/$out" "$DIST/${d#./}/"
+		# collect under dist/ named as KolibriOS ships it: lowercase, without
+		# the extension. The program dir is mirrored so same-named outputs
+		# like menu/menu.com and examples/menu.com don't clash.
+		dst="$DIST/${d#./}/$(printf '%s' "${out%.com}" | tr 'A-Z' 'a-z')"
+		mkdir -p "$(dirname "$dst")"
+		cp "$d/$out" "$dst"
 	else
 		fail=$((fail + 1))
 		failed="$failed $d/$src"

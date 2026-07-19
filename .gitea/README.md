@@ -28,9 +28,11 @@ The heavy lifting is in [`build.sh`](../build.sh):
 
 Language variants `LANG_ENG` and `LANG_RUS` build in parallel.
 
-The compiled `.com` files are collected under `dist/` and published as a
-per-language artifact (`cmm-programs-LANG_ENG` / `cmm-programs-LANG_RUS`),
-downloadable from the run's **Summary** page for 14 days.
+Built programs are collected under `dist/` named as KolibriOS ships them —
+lowercase and without the `.com` extension — and published per language
+(`cmm-programs-LANG_ENG` / `cmm-programs-LANG_RUS`), downloadable from the
+run's **Summary** page for 14 days. They are not packed with `kpack`; the
+OS build does that itself when it assembles an image.
 
 ### Running it locally
 
