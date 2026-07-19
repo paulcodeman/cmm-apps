@@ -6,9 +6,11 @@ Runs on every push to `main` and on every pull request. It compiles
 every C-- program in the repository and fails if any target stops
 building, so a change that breaks compilation is caught before merge.
 
-Unlike the main [kolibrios] build, this repository does **not** build a
-toolchain: the c-- compiler is committed here (`c--/c--.elf`, a static
-32-bit i386 Linux binary), so the job simply runs it over every program.
+The compiler is not committed here. The job clones [KolibriOS/cmm], builds
+it with `Makefile.lin32` and puts the result on `PATH` together with its
+`c--.ini`, which is where the compiler looks for it. Building the tip of
+the compiler on every run is deliberate: a compiler change that breaks a
+program is caught here, before it is bumped into the OS tree.
 
 The heavy lifting is in [`build.sh`](../build.sh):
 
@@ -33,18 +35,19 @@ downloadable from the run's **Summary** page for 14 days.
 ### Running it locally
 
 ```sh
-# Linux (uses the in-repo c--.elf):
+# c-- on PATH:
 ./build.sh LANG_ENG
 
-# Windows / Git Bash (point CMM at the .exe):
-CMM=./c--/c--.exe sh build.sh LANG_ENG
+# or point CMM at a compiler built from KolibriOS/cmm:
+CMM=/path/to/c--.exe sh build.sh LANG_ENG
 ```
 
 ### Runner
 
 The job uses the `kolibri-toolchain` runner, the same self-hosted runner
-label as the main kolibrios build. If that label is not available to this
-repository, change `runs-on:` in `workflows/build.yaml` to a runner that
-can execute a 32-bit static ELF (any x86-64 Linux with IA32 emulation).
+label as the main [kolibrios] build. It needs a working `g++` and `make`
+to build the compiler, and must be able to run the resulting 32-bit i386
+binary (any x86-64 Linux with IA32 support).
 
 [kolibrios]: https://git.kolibrios.org/KolibriOS/kolibrios
+[KolibriOS/cmm]: https://git.kolibrios.org/KolibriOS/cmm

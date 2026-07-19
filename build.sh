@@ -1,11 +1,14 @@
 #!/bin/sh
 # Compile every C-- program in this repository and fail if any target
 # does not build. This mirrors what `tup` does in the main KolibriOS
-# build, but standalone: it reads each Tupfile.lua and runs the in-repo
-# c-- compiler on the declared target(s). No external toolchain needed.
+# build, but standalone: it reads each Tupfile.lua and runs the c--
+# compiler on the declared target(s).
+#
+# The compiler is not part of this repository - it lives in KolibriOS/cmm
+# and is expected on PATH, exactly as the tup rules invoke it.
 #
 #   Usage:  ./build.sh [LANG_ENG|LANG_RUS]      (default: LANG_ENG)
-#   Env:    CMM=/path/to/c--   override compiler (default: ./c--/c--.elf)
+#   Env:    CMM=/path/to/c--   override compiler (default: c-- from PATH)
 #
 # Exit status: 0 if every program compiled, 1 otherwise.
 
@@ -15,7 +18,7 @@ set -u
 export MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*'
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-CMM=${CMM:-"$ROOT/c--/c--.elf"}
+CMM=${CMM:-c--}
 LANG_DEF=${1:-LANG_ENG}
 CMM_TIMEOUT=${CMM_TIMEOUT:-60}   # seconds; a real compile takes <2s, so this only fires on a hang
 CMM_TRIES=${CMM_TRIES:-4}        # retries to absorb the flaky c-- crash/hang
@@ -23,8 +26,11 @@ DIST="$ROOT/dist"                # built binaries are collected here for the CI 
 rm -rf "$DIST"
 mkdir -p "$DIST"
 
-if [ ! -x "$CMM" ]; then
-	chmod +x "$CMM" 2>/dev/null || true
+if ! command -v "$CMM" >/dev/null 2>&1 && [ ! -x "$CMM" ]; then
+	echo "c-- not found: $CMM" >&2
+	echo "build it from https://git.kolibrios.org/KolibriOS/cmm and put it on PATH," >&2
+	echo "or point CMM at it." >&2
+	exit 2
 fi
 
 echo "compiler : $CMM"

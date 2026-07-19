@@ -2,9 +2,9 @@
 # SPDX-FileCopyrightText: 2026 KolibriOS team
 
 # Auto-build for cmm_apps: compile every C-- program on push and PR,
-# and fail if any program stops compiling. Unlike the main kolibrios
-# build, no toolchain is built here -- the c-- compiler ships in the
-# repo (c--/c--.elf), so we just run it over each Tupfile.lua target.
+# and fail if any program stops compiling. The compiler is built from
+# KolibriOS/cmm, so a compiler change that breaks a program shows up
+# here before it is bumped into the OS.
 
 name: 'Build C-- programs'
 
@@ -31,6 +31,27 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
+      # Cloned and installed outside the workspace: the compiler repo carries a
+      # Tupfile.lua of its own, and build.sh compiles every Tupfile.lua it finds
+      # under the checkout. Paths carry the matrix key so the two language jobs
+      # never share a directory on the runner.
+      - name: Build and install C--
+        env:
+          BIN: /tmp/cmm-bin-${{ matrix.lang }}
+          SRC: /tmp/cmm-src-${{ matrix.lang }}
+        run: |
+          set -eu
+          rm -rf "$SRC" "$BIN"
+          git clone --depth 1 https://git.kolibrios.org/KolibriOS/cmm.git "$SRC"
+          make -C "$SRC" -f Makefile.lin32
+          mkdir -p "$BIN"
+          install -m 755 "$SRC/c--" "$BIN/c--"
+          # the compiler looks for c--.ini in the current directory and then in
+          # each PATH entry - never beside its own executable - so the config
+          # has to go into a PATH directory or the build silently uses defaults
+          install -m 644 "$SRC/c--.ini" "$BIN/c--.ini"
+          echo "$BIN" >> "$GITHUB_PATH"
 
       - name: Build all C-- programs
         run: sh build.sh ${{ matrix.lang }}
