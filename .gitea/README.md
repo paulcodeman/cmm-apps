@@ -26,7 +26,7 @@ The heavy lifting is in [`build.sh`](../build.sh):
   flakiness) is caught by a per-compile timeout and retried up to 4 times
   before being reported as a failure.
 
-Language variants `LANG_ENG` and `LANG_RUS` build in parallel.
+Language variants `LANG_ENG`, `LANG_RUS` and `LANG_SPA` build in parallel.
 
 Built programs are collected under `dist/` named as KolibriOS ships them —
 lowercase and without the `.com` extension — and published per language

@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lang: [LANG_ENG, LANG_RUS]
+        lang: [LANG_ENG, LANG_RUS, LANG_SPA]
 
     steps:
       - name: Checkout
