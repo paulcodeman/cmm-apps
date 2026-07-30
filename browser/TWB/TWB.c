@@ -170,7 +170,7 @@ void TWebBrowser::ParseHtml(dword _bufpointer, _bufsize){
 				continue;
 			}
 			if (ESBYTE[bufpos] == 0x09) {
-				tab_len = draw_x - left_gap / list.font_w + strlen(#linebuf) % 4;
+				tab_len = ((((draw_x-left_gap)/list.font_w)+strlen(#linebuf))%4);
 				if (!tab_len) tab_len = 4; else tab_len = 4 - tab_len;
 				while (tab_len) {chrcat(#linebuf,' '); tab_len--;}
 				continue;

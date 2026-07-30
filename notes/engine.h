@@ -35,7 +35,7 @@ void NOTE_LINE::Delete()
 
 struct NOTES : llist {
 	char txt_path[4096];
-	char txt_data[MAX_LINE_CHARS+4*LINES_COUNT+30];
+	char txt_data[(((MAX_LINE_CHARS+4)*LINES_COUNT)+30)];
 	bool txt_file_exists;
 
 	NOTE_LINE lines[LINES_COUNT]; 
@@ -133,8 +133,8 @@ dword NOTES::DrawLine(int line_n, draw_h) {
 	else
 	{
 		drawy = item_h*line_n+5+y;
-		DefineButton(RED_LINE_X-CHBOX/2+x, drawy, CHBOX-1,CHBOX-1, CHECKBOX_ID+line_n+BT_HIDE, 0); //checkbox
-		PutImage(RED_LINE_X-CHBOX/2+x,drawy, CHBOX,CHBOX, lines[line_n].state*CHBOX*CHBOX*3+#checkbox);
+		DefineButton((((RED_LINE_X-CHBOX)/2)+x), drawy, CHBOX-1,CHBOX-1, CHECKBOX_ID+line_n+BT_HIDE, 0); //checkbox
+		PutImage((((RED_LINE_X-CHBOX)/2)+x),drawy, CHBOX,CHBOX, lines[line_n].state*CHBOX*CHBOX*3+#checkbox);
 		if (cur_text) WriteText(x+RED_LINE_X+6, drawy+2, 0x80, lines[line_n].state*0x777777, cur_text);
 		if (lines[line_n].state == true) DrawBar(x+RED_LINE_X+6, drawy+6, strlen(cur_text)*6, 1, 0x444444); //strike
 		DrawBar(WIN_W,drawy,1,item_h,0xBBBBBB); //fast fix; proper fix is to restrict WriteText() char length

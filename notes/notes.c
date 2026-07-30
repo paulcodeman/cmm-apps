@@ -35,7 +35,7 @@ unsigned char edge[sizeof(file "img/edge.raw")]= FROM "img/edge.raw"; //292x6
 #define WIN_H RED_LINE_X*LINES_COUNT+HEADER_HEIGHT+4
 
 #define DELETE_BTN 4;
-#define DELETE_W sizeof(DELETE_TEXT)+2*6
+#define DELETE_W ((sizeof(DELETE_TEXT)+2)*6)
 
 #include "engine.h"
 
@@ -51,7 +51,7 @@ dword lists[] = { 0xEAEAEA, 0xCDCDCD, 0xF0F0F0, 0xD8D8D8, 0 };
 
 bool delete_active = false;
 bool window_dragable = true;
-block delBtn = { WIN_W-DELETE_W-1, NULL, DELETE_W, RED_LINE_X};
+block delBtn = { 0, NULL, 0, RED_LINE_X};
 
 //===================================================//
 //                                                   //
@@ -62,6 +62,13 @@ block delBtn = { WIN_W-DELETE_W-1, NULL, DELETE_W, RED_LINE_X};
 void main()
 {   
 	bool first_redraw=true;
+	
+	delBtn.w = sizeof(DELETE_TEXT);
+	delBtn.w += 2;
+	delBtn.w *= 6;
+	delBtn.x = WIN_W;
+	delBtn.x -= delBtn.w;
+	delBtn.x -= 1;
 	load_dll(boxlib, #box_lib_init,0);
 
 	if (GetCpuFrequency()/1000000>=1000) window_dragable=true; else window_dragable=false;
@@ -90,7 +97,7 @@ void main()
 
 			if (mouse.key&MOUSE_LEFT)&&(mouse.up) 
 			&& (notes.ProcessMouse(mouse.x, mouse.y)) {
-				notebox.pos = mouse.x - notebox.left / 6;
+				notebox.pos = ((mouse.x-notebox.left)/6);
 				EventListRedraw();
 				EventActivateLine(notes.cur_y);
 			}
@@ -157,7 +164,7 @@ void DrawCloseButton(dword x,y,w,h)
 	DrawRectangle3D(x+1,y+1,w-2,h-2,0xE6A37F,0xDD8452);
 	PutPixel(x+w-1, y+1, 0xE08C5E);
 	DefineButton(x+1,y+1,w-1,h-1,CLOSE_BTN+BT_HIDE,0);
-	WriteTextB(-6+w/2+x,h/2-4+y,0x80,0xFFFfff,"x");
+	WriteTextB((((-6+w)/2)+x),h/2-4+y,0x80,0xFFFfff,"x");
 }
 
 void draw_window()

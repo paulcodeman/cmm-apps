@@ -288,7 +288,7 @@ char readbuf[32];
 	if (!error)
 	{
 		fcount = ESDWORD[#readbuf+8];
-		buf = malloc(fcount+1*304+32);
+		buf = malloc((((fcount+1)*304)+32));
 		ReadDir(fcount, buf, path);
 		//fcount=EBX;
 
@@ -393,7 +393,7 @@ char readbuf[32];
 {
   if (bytes_hi > 0) {
 		if (bytes_lo>=1073741824) bytes_lo >>= 30; else bytes_lo = 0;
-		sprintf(#ConvertSize_size_prefix,"%d GB",bytes_hi<<2 + bytes_lo);
+		sprintf(#ConvertSize_size_prefix,"%d GB",((bytes_hi<<2)+bytes_lo));
 		return #ConvertSize_size_prefix;
   }
   else return ConvertSize(bytes_lo);

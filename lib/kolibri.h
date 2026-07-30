@@ -400,8 +400,8 @@ inline fastcall int TestBit( EAX, CL)
 	$int 0x40
 	
 	$xor EAX,EAX
-	EBX = _x << 16 + _w; 
-	ECX = _y << 16 + _h;
+	EBX = ((_x<<16)+_w); 
+	ECX = ((_y<<16)+_h);
 	EDX = _window_type << 24 | _bgcolor;
 	EDI = _title;
 	ESI = _flags;
@@ -450,8 +450,8 @@ inline fastcall dword SetWindowLayerBehaviour(EDX, ESI)
 :void WriteText(dword x,y,byte fontType, dword color, str_offset)
 {
 	EAX = 4;
-	EBX = x<<16+y;
-	ECX = fontType<<24+color;
+	EBX = ((x<<16)+y);
+	ECX = ((fontType<<24)+color);
 	EDX = str_offset;
 	$int 0x40;
 }
@@ -473,8 +473,8 @@ inline fastcall dword SetWindowLayerBehaviour(EDX, ESI)
 	EAX = 47;
 	EBX = flags;
 	ECX = number_or_offset;
-	EDX = x<<16+y;
-	ESI = fontType<<24+color;
+	EDX = ((x<<16)+y);
+	ESI = ((fontType<<24)+color);
 	$int 0x40;
 }
 
@@ -482,8 +482,8 @@ inline fastcall dword SetWindowLayerBehaviour(EDX, ESI)
 {
   EAX = 36;
   EBX = dst_offset;
-  ECX = w << 16 + h;
-  EDX = x << 16 + y;
+  ECX = ((w<<16)+h);
+  EDX = ((x<<16)+y);
   $int  0x40;
 }
 
@@ -525,8 +525,8 @@ inline fastcall dword SetWindowLayerBehaviour(EDX, ESI)
 {
 	EAX = 7;
 	EBX = data_offset;
-	ECX = w<<16+h;
-	EDX = x<<16+y;
+	ECX = ((w<<16)+h);
+	EDX = ((x<<16)+y);
 	$int 0x40
 }
 
@@ -535,8 +535,8 @@ inline fastcall dword SetWindowLayerBehaviour(EDX, ESI)
 	if (h<1) || (w<0) return;
 	EAX = 65;
 	EBX = inbuf;
-	ECX = w<<16+h;
-	EDX = x<<16+y;
+	ECX = ((w<<16)+h);
+	EDX = ((x<<16)+y);
 	ESI = bits;
 	EDI = pal;
 	EBP = 0;
@@ -552,8 +552,8 @@ inline fastcall void PutPixel( EBX,ECX,EDX)
 :void DrawBar(dword x,y,w,h,color)
 {
 	EAX = 13;
-	EBX = x<<16+w;
-	ECX = y<<16+h;
+	EBX = ((x<<16)+w);
+	ECX = ((y<<16)+h);
 	EDX = color;
 	$int 0x40
 }
@@ -565,16 +565,16 @@ inline fastcall void PutPixel( EBX,ECX,EDX)
 	$int 0x40;
 	EDX = id;
 	ESI = color;
-	EBX = x<<16+w;
-	ECX = y<<16+h;
+	EBX = ((x<<16)+w);
+	ECX = ((y<<16)+h);
 	$int 0x40
 }
 
 :void UnsafeDefineButton(dword x,y,w,h,id,color)
 {
 	EAX = 8;
-	EBX = x<<16+w;
-	ECX = y<<16+h;
+	EBX = ((x<<16)+w);
+	ECX = ((y<<16)+h);
 	EDX = id;
 	ESI = color;
 	$int 0x40

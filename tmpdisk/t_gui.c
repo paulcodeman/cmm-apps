@@ -183,7 +183,7 @@ void Main_Window()
 			break;
          case evReDraw:
 			sc.get();
-			DefineAndDrawWindow(screen.w-WIN_W/2,screen.h-WIN_H/2,
+			DefineAndDrawWindow(((screen.w-WIN_W)/2),((screen.h-WIN_H)/2),
 				WIN_W+9, WIN_H+skin_h+4,0x74,sc.work,T_WIN_TITLE,0);
 			GetProcessInfo(#Form, SelfInfo);
 			if (Form.status_window&ROLLED_UP) break;
@@ -239,7 +239,7 @@ void GetDisks()
 	ReadDir(0, devbuf, "/");
 	fcount=ESDWORD[devbuf+8];
 	mem_Free(devbuf);
-	devbuf=mem_Alloc(fcount+1*304+32);
+	devbuf=mem_Alloc((((fcount+1)*304)+32));
 	ReadDir(fcount, devbuf, "/");
 	
 	disk_num=0;

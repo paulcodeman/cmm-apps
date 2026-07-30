@@ -64,7 +64,7 @@
 		text_col = sc.work_text;
 	}
 
-	WriteText( -strlen(value_text)+3*8 + x+6, SIZE / 2 + y -6, 0x90, 0x333333, value_text);
+	WriteText( ((((-strlen(value_text)+3)*8)+x)+6), SIZE / 2 + y -6, 0x90, 0x333333, value_text);
 
 	DrawCaptButton(VALUE_FIELD_W + x + 1,    y, SIZE, SIZE, id_inc, sc.button, sc.button_text, "+");
 	DrawCaptButton(VALUE_FIELD_W + x + SIZE, y, SIZE, SIZE, id_dec, sc.button, sc.button_text, "-");

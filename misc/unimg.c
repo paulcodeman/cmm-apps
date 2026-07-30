@@ -135,7 +135,7 @@ dword GetImageInfo(dword buf)
 
 int cluster_to_offset(int c)
 {
-	return c - 2 * bpc + data_off;
+	return (((c-2)*bpc)+data_off);
 }
 
 int next_cluster(int c)

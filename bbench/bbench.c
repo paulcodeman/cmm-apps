@@ -148,8 +148,8 @@ void bench_exit()      // single exit point: never leave bbtst.tmp behind
 void FlatButton(dword x, id, bg, tc, label)
 {
 	DefineButton(x, BUTTON_Y, BUTTON_W, BUTTON_H - 1, id, bg);
-	WriteText(-strlen(label)*8 + BUTTON_W / 2 + x, 
-		BUTTON_H - 16 / 2 + BUTTON_Y, 0x90, tc, label);
+	WriteText(((((-strlen(label)*8)+BUTTON_W)/2)+x), 
+		(((BUTTON_H-16)/2)+BUTTON_Y), 0x90, tc, label);
 }
 
 //---------------- checkbox model ----------------//
@@ -472,7 +472,7 @@ void DrawRunScreen()      // once per run: clear the body + draw the mascot
 {
 	dword tx;
 	DrawBar(0, 0, WIN_W, STATUSBAR_Y, sc.work);
-	draw_icon_32(WIN_W-32/2, 96, sc.work, 121);
+	draw_icon_32(((WIN_W-32)/2), 96, sc.work, 121);
 	tx = strlen(#bench_caption)*8;                       // 0x90 = 8x16 font
 	tx = WIN_W - tx;  tx = tx/2;
 	WriteText(tx, 140, 0x90, sc.work_text, #bench_caption);

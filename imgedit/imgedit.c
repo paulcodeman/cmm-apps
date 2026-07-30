@@ -132,7 +132,7 @@ void main()
 
 void draw_window()
 {
-	DefineAndDrawWindow(screen.w-Form.width/2, screen.h-Form.height/2, Form.width, Form.height, 0x42, NULL, NULL, 0);
+	DefineAndDrawWindow(((screen.w-Form.width)/2), ((screen.h-Form.height)/2), Form.width, Form.height, 0x42, NULL, NULL, 0);
 	GetProcessInfo(#Form, SelfInfo);
 	/* Draw window borders */
 	DrawRectangle(0,0,Form.width,Form.height,COL_LINE);
@@ -140,8 +140,8 @@ void draw_window()
 	/* Check if the window is collapsed into header */
 	if (Form.status_window&ROLLED_UP) {
 		DrawBar(2, 2, Form.width-3, skin_h-4, COL_WORK);
-		WriteText(5, skin_h-11/2, 0x90, COL_WORK_TEXT, "ImageEditor Pro [Collapsed]");
-		draw_window_manipulation_buttons(skin_h-17/2);
+		WriteText(5, ((skin_h-11)/2), 0x90, COL_WORK_TEXT, "ImageEditor Pro [Collapsed]");
+		draw_window_manipulation_buttons(((skin_h-17)/2));
 		return;
 	}
 	if (Form.width  < 560) { MoveSize(OLD,OLD,560,OLD); return; }
@@ -216,7 +216,7 @@ void draw_status_bar()
 		else if (img_info[ESI] == '\02') img_info[ESI]='@';
 		else img_info[ESI]=' ';
 	}
-	ECX = 0x90 << 24 + COL_BUTTON_TEXT;
+	ECX = ((0x90<<24)+COL_BUTTON_TEXT);
 	$int 64
 }
 

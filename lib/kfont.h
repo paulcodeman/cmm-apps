@@ -85,7 +85,11 @@ int kfont_char_width[255];
 	dword ofs;
 	if(size.pt<9) size.pt = 9;
 	font = font_begin;
-	ofs = DSDWORD[calc(size.pt-8<<2+font_begin)];
+	ofs = size.pt;
+	ofs -= 8;
+	ofs <<= 2;
+	ofs += font_begin;
+	ofs = DSDWORD[ofs];
 	if(ofs==-1)return false;
 	font += ofs + 156;
 	file_size = DSDWORD[calc(font)];
@@ -153,10 +157,10 @@ int kfont_char_width[255];
 	if(s==32)return width/4+1;
 	if(s==9)return width;
 	s = Cp866ToAnsi(s);
-	tmp = block*s << 2 + font;
+	tmp = (((block*s)<<2)+font);
 	for(yi=0; yi<height; yi++)
 	{
-		EDI = size.offset_y + yi + y * size.width * KFONT_BPP + image_raw;
+		EDI = (((((size.offset_y+yi)+y)*size.width)*KFONT_BPP)+image_raw);
 		for(xi=0; xi<width; xi++)
 		{
 			if(iii%32) _ >>= 1;
@@ -172,7 +176,7 @@ int kfont_char_width[255];
 				//in case of image_raw==0 calculate size
 				if (image_raw)
 				{
-					offs = x + xi * KFONT_BPP + EDI;
+					offs = (((x+xi)*KFONT_BPP)+EDI);
 					DSDWORD[offs] = color;
 					if(bold) DSDWORD[offs+KFONT_BPP] = color;
 				}
@@ -213,7 +217,7 @@ inline fastcall dword b32(EAX) { return DSDWORD[EAX]; }
 {
 	dword i,line_w,to,dark_background;
 	line_w = size.width * KFONT_BPP;
-	to = size.height - 1 * line_w + raw - KFONT_BPP;
+	to = ((((size.height-1)*line_w)+raw)-KFONT_BPP);
 	for(i=raw; i < to; i+=KFONT_BPP)
 	{
 		if(i-raw%line_w +KFONT_BPP == line_w) continue;
@@ -296,7 +300,7 @@ inline fastcall dword b32(EAX) { return DSDWORD[EAX]; }
 :int KFONT::WriteIntoWindowCenter(dword x, _y,w,h, _background, _color; byte font_size; dword text1)
 {
 	getsize(font_size, text1);
-	return WriteIntoWindow(w-size.width/2+x-1, _y, _background, _color, font_size, text1);
+	return WriteIntoWindow(((((w-size.width)/2)+x)-1), _y, _background, _color, font_size, text1);
 }
 
 :void KFONT::ShowBuffer(dword _x, _y)

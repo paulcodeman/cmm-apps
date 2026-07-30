@@ -120,7 +120,7 @@ void _SystemDiscs::Draw()
 				if (is_active) WriteText(DRAW_X+30,draw_y+5,0x80,0x555555,#dev_name);
 				WriteText(DRAW_X+29,draw_y+5,0x80,0,#dev_name);
 			}
-			PutImage(DRAW_X+6,draw_y, 18,17, is_active*DISK_COUNT+dev_icon*17*18*3+#devices);
+			PutImage(DRAW_X+6,draw_y, 18,17, ((((((is_active*DISK_COUNT)+dev_icon)*17)*18)*3)+#devices));
 			DrawBar(DRAW_X+6, draw_y+DEV_H-1, 18, 1, 0xFFffFF);
 			draw_y += DEV_H;			
 		}
@@ -148,7 +148,7 @@ void _SystemDiscs::DrawSelect(int draw_x, btid, dword _path)
 	DrawRectangle(draw_x-1, SELECTY-1, DDW+2-KFM2_DEVH, KFM2_DEVH+1, sc.line);
 	DrawBar(draw_x, SELECTY, DDW+1-KFM2_DEVH, KFM2_DEVH, 0xFFFFFF);
 	PutImage(draw_x + 5, SELECTY+2, 18,17, dev_icon*17*18*3+#devices);
-	kfont.WriteIntoWindow(draw_x + 24, math.max(KFM2_DEVH-kfont.height/2+SELECTY,0), 0xFFFfff, 0x000000, kfont.size.pt, #dev_name+1);
+	kfont.WriteIntoWindow(draw_x + 24, math.max((((KFM2_DEVH-kfont.height)/2)+SELECTY),0), 0xFFFfff, 0x000000, kfont.size.pt, #dev_name+1);
 	DefineHiddenButton(draw_x, SELECTY, DDW-1, KFM2_DEVH-1, btid);
 	DrawFlatButtonSmall(draw_x+DDW-KFM2_DEVH+1, SELECTY-1, KFM2_DEVH-1, KFM2_DEVH+1, NULL, "\x19");
 }
@@ -172,7 +172,7 @@ void _SystemDiscs::DrawOptions(int draw_x)
 
 		DrawBar(draw_x, optionsy, DDW, KFM2_DEVH, 0xFFFFFF);
 		DefineButton(draw_x, optionsy, DDW, KFM2_DEVH-1, 100+i+BT_HIDE,0xFFFFFF);
-		PutImage(draw_x + 5, optionsy+2, 18,17, kfont.bold*7+dev_icon*17*18*3+#devices);
+		PutImage(draw_x + 5, optionsy+2, 18,17, ((((((kfont.bold*7)+dev_icon)*17)*18)*3)+#devices));
 		//strncpy(#volume_label, GetVolumeLabel(#dev_name), sizeof(volume_label));
 		strcpy(#label_file_name, #dev_name);
 		//if (dev_name[1]!='k') && (dev_name[2]!='y') {

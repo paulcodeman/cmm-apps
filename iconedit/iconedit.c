@@ -76,8 +76,8 @@ int leftbar_w;
 #define COLSIZE 18
 #define RIGHT_BAR_W PAL_ITEMS_X_COUNT*COLSIZE
 
-#define TO_CANVAS_X(xval) xval - canvas.x/zoom.value
-#define TO_CANVAS_Y(yval) yval - canvas.y/zoom.value
+#define TO_CANVAS_X(xval) ((xval-canvas.x)/zoom.value)
+#define TO_CANVAS_Y(yval) ((yval-canvas.y)/zoom.value)
 
 block canvas = { NULL, NULL, NULL, NULL };
 block wrapper = { 0, TOPBAR_H, NULL, NULL };
@@ -220,8 +220,8 @@ void main()
 			if (mouse.pkm) tool_color = color2;
 			if (mouse.mkm) break;
 
-			hoverX = mouse.x - canvas.x / zoom.value;
-			hoverY = mouse.y - canvas.y / zoom.value;
+			hoverX = ((mouse.x-canvas.x)/zoom.value);
+			hoverY = ((mouse.y-canvas.y)/zoom.value);
 			if (hoverX<0) hoverX = 0;
 			if (hoverY<0) hoverY = 0;
 			if (hoverX>image.columns-1) hoverX = image.columns-1;
@@ -442,8 +442,8 @@ void DrawEditArea()
 		DrawEditArea();
 		return;
 	}
-	canvas.x = -zoom.value*image.columns+wrapper.w/2 + wrapper.x;
-	canvas.y = -zoom.value*image.rows+wrapper.h/2 + wrapper.y;
+	canvas.x = ((((-zoom.value*image.columns)+wrapper.w)/2)+wrapper.x);
+	canvas.y = ((((-zoom.value*image.rows)+wrapper.h)/2)+wrapper.y);
 	DrawCanvas();
 	//}
 
@@ -491,7 +491,11 @@ void GenerateCurrentColorGradient()
 	int i, avg, rmax;
 
 	rgb.DwordToRgb(color1);
-	avg = 255 - calc(rgb.r + rgb.g + rgb.b / 3);
+	avg = rgb.r;
+	avg += rgb.g;
+	avg += rgb.b;
+	avg /= 3;
+	avg = 255 - avg;
 
 	lmax = b_color_gradient.w *avg/255 | 1;
 	rmax = b_color_gradient.w - lmax | 1;
@@ -589,8 +593,8 @@ void DrawPreview()
 	if (image.columns > right_bar.w) return;
 	if (image.rows > preview_h) return;
 
-	PutImage(right_bar.w - image.columns / 2 + x - 3,
-		preview_h - image.rows / 2 + y, 
+	PutImage(((((right_bar.w-image.columns)/2)+x)-3),
+		(((preview_h-image.rows)/2)+y), 
 		image.columns, image.rows, image.get_image()
 		);
 }
@@ -605,8 +609,8 @@ void DrawImageWithBg(dword _x, _y, _col_to)
 {
 	_x *= preview_size;
 	_y *= preview_size;
-	DrawWideRectangle(_x,_y, preview_size, preview_size, preview_size-image.columns/2, _col_to);
-	PutImage(preview_size - image.columns / 2 + _x, preview_size - image.rows / 2 + _y,
+	DrawWideRectangle(_x,_y, preview_size, preview_size, ((preview_size-image.columns)/2), _col_to);
+	PutImage((((preview_size-image.columns)/2)+_x), (((preview_size-image.rows)/2)+_y),
 		image.columns, image.rows, image.get_image_with_replaced_color(color2, _col_to));
 }
 

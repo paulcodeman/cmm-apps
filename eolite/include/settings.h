@@ -73,7 +73,7 @@ void settings_dialog()
 				break;
 				
 			case evReDraw:
-				DefineAndDrawWindow(Form.cwidth-300/2+Form.left, Form.cheight-292/2+Form.top, 400, 
+				DefineAndDrawWindow((((Form.cwidth-300)/2)+Form.left), (((Form.cheight-292)/2)+Form.top), 400, 
 					345+skin_h,0x34,sc.work,TITLE_SETT,0);
 				GetProcessInfo(#Settings, SelfInfo);
 				DrawSettingsCheckBoxes();

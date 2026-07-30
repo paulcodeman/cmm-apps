@@ -74,11 +74,11 @@ void main()
 	list.y = 32;
 
 	DrawList();
-	window_height = row+1*list.item_h + list_pos + skin_h + 15;
+	window_height = (((((row+1)*list.item_h)+list_pos)+skin_h)+15);
 	if (window_height>screen.h) {
 		window_width = screen.w;
 		list.item_h -= 5;
-		window_height = row+1*list.item_h + list_pos + skin_h + 15;
+		window_height = (((((row+1)*list.item_h)+list_pos)+skin_h)+15);
 		small_screen = true;
 	}
 
@@ -99,7 +99,7 @@ void main()
 			break;
 
 		case evReDraw:
-			DefineAndDrawWindow(screen.w-window_width/2,screen.h-window_height/2,window_width,window_height,0x74,0,"",0);
+			DefineAndDrawWindow(((screen.w-window_width)/2),((screen.h-window_height)/2),window_width,window_height,0x74,0,"",0);
 			sc.get();
 			GetProcessInfo(#Form, SelfInfo);
 			if (Form.status_window&ROLLED_UP) { 
@@ -114,7 +114,7 @@ void main()
 				DrawTopBar();
 			}
 			DrawList();
-			DrawBar(0, row +1 * list.item_h + list_pos, Form.cwidth, -row - 1 * list.item_h - list_pos + Form.cheight, sc.light);
+			DrawBar(0, (((row+1)*list.item_h)+list_pos), Form.cwidth, ((((-row-1)*list.item_h)-list_pos)+Form.cheight), sc.light);
 			DrawSelection();
 	}
 }
@@ -123,7 +123,7 @@ void DrawList() {
 	list.count = 0;
 	row = -1;
 	list_pos = list.y;
-	list.column_max = window_width - 10 / list.item_w;
+	list.column_max = ((window_width-10)/list.item_w);
 	ini_enum_sections stdcall (#settings_ini_path, #process_sections);
 	list.visible = list.count;
 }
@@ -158,7 +158,7 @@ byte draw_icons_from_section(dword key_value, key_name, sec_name, f_name)
 	strncpy(list.count * MAX_FPATH + app_path_collection, key_value, MAX_FPATH);
 
 	text_x = col*list.item_w+5;
-	text_y = list.item_h - 40 / 2;
+	text_y = ((list.item_h-40)/2);
 	if (!strchr(key_name, ' ')) {//|| (kfont.getsize(key_name)+30<list.item_w) <== too slow
 		kfont.WriteIntoWindowCenter(text_x, row*list.item_h+46 + list_pos, list.item_w,0, sc.light, sc.work_text, 12, key_name);
 	} else {

@@ -19,7 +19,7 @@ inline dword hashCode(dword data, length)
 	dword hash = 0;
 	WHILE (length)
 	{
-		hash = hash << 5 - hash + DSBYTE[data];
+		hash = (((hash<<5)-hash)+DSBYTE[data]);
 		data++;
 		length--;
 	}

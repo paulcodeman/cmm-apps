@@ -41,7 +41,7 @@
 #define LIST_W 260
 #define PANEL_H 50
 #define LP 6 //LIST_PADDING
-#define SL_VISIBLE WIN_H - PANEL_H - LP / SELECT_LIST_ITEMH
+#define SL_VISIBLE 19
 
 #define RIGHTx LP + LIST_W + TAB_P + 30
 #define RIGHTy PANEL_H
@@ -66,8 +66,7 @@ _ini ini = { "/sys/settings/system.ini" };
 char default_dir[] = "/sys";
 od_filter filter2 = { 8, "TXT\0\0" };
 
-_tabs tabs = { -sizeof(t_skins)-sizeof(t_wallpapers)-sizeof(t_screensaver)
-	-3*8+WIN_W - TAB_P / 2, LP, NULL, BASE_TAB_BUTTON_ID };
+_tabs tabs = { 0, LP, NULL, BASE_TAB_BUTTON_ID };
 
 scroll_bar ss_timeout = { RIGHTw-19,RIGHTx,15,RIGHTy+25,0,3,89,10,0,0xFFFfff,
 	0xBBBbbb,0xeeeeee};

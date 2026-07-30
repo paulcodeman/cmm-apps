@@ -101,7 +101,7 @@ void PaintVisible()
 			if (s2 > 0) break;
 
 			if (s1 > 0) && (s2 < 0) {
-				canvas.DrawBar(search.found.get(ff) - lines.get(absolute_y) * list.font_w + 3,
+				canvas.DrawBar((((search.found.get(ff)-lines.get(absolute_y))*list.font_w)+3),
 					ydraw, strlen(#found_text) * list.font_w, list.item_h, theme.found);
 				search_next = false;
 			}

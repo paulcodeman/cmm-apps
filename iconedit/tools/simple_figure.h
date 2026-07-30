@@ -40,8 +40,8 @@ void SimpleFigureTool_onMouseEvent(int mouseX, int mouseY, int lkm, int pkm) {
 				figTool.startY = mouseY;
 			}
 			else {
-				if ((calc(mouseX - canvas.x/zoom.value) != figTool.lastTempPosX)
-					|| (calc(mouseY - canvas.y/zoom.value) != figTool.lastTempPosY)) 
+				if ((calc(mouseX-canvas.x)/zoom.value != figTool.lastTempPosX)
+					|| (calc(mouseY-canvas.y)/zoom.value != figTool.lastTempPosY)) 
 				{
 					DrawCanvas();
 				}
@@ -100,8 +100,8 @@ void SimpleFigureTool_onCanvasDraw() {
 		else if (currentTool == TOOL_BAR)
 			DrawBarIcon(x1, y1, x2, y2, tool_color, TOCANVAS);
 
-		figTool.lastTempPosX = mouseX_last - canvas.x/zoom.value;
-		figTool.lastTempPosY = mouseY_last - canvas.y/zoom.value;
+		figTool.lastTempPosX = ((mouseX_last-canvas.x)/zoom.value);
+		figTool.lastTempPosY = ((mouseY_last-canvas.y)/zoom.value);
 	}
 }
 

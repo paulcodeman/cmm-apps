@@ -25,13 +25,13 @@ bool SELECTION::is_active()
 
 void SELECTION::draw_line(dword x,y,w)
 {
-	canvas.DrawBar(x, y - list.first * list.item_h, w, list.item_h, color);
+	canvas.DrawBar(x, ((y-list.first)*list.item_h), w, list.item_h, color);
 }
 
 void SELECTION::draw(int i)
 {
 	if (is_active()) {
-		if (start_y == i) && (end_y == i) draw_line(start_x * list.font_w+2, start_y, end_x - start_x * list.font_w);
+		if (start_y == i) && (end_y == i) draw_line(start_x * list.font_w+2, start_y, ((end_x-start_x)*list.font_w));
 		else if (start_y == i) draw_line(start_x * list.font_w+2, start_y, list.w -2- calc(start_x * list.font_w));
 		else if (end_y == i) draw_line(0, end_y, end_x * list.font_w+2);
 		//only for debug:
@@ -40,7 +40,7 @@ void SELECTION::draw(int i)
 	}
 	//DrawCursor
 	if (list.cur_y >= list.first) && (list.cur_y <= list.first+list.visible) {
-		canvas.DrawBar(list.cur_x * list.font_w + 2,  list.cur_y - list.first * list.item_h, 2, list.item_h, theme.cursor);
+		canvas.DrawBar(list.cur_x * list.font_w + 2,  ((list.cur_y-list.first)*list.item_h), 2, list.item_h, theme.cursor);
 	}
 }
 

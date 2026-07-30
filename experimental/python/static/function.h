@@ -57,7 +57,7 @@
 	i = 8;
 	WHILE(i)
 	{
-		DSBYTE[x] = DSBYTE[y&0xF+#arraySymbolHEX];
+		DSBYTE[x] = DSBYTE[((y&0xF)+#arraySymbolHEX)];
 		y>>=4;
 		x--;
 		i--;

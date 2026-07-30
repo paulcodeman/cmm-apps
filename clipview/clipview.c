@@ -30,7 +30,7 @@ enum {
 #define LIST_Y 32
 #define PANEL_TOP_H LIST_Y-2
 #define LINE_H 20
-#define TEXT_Y LINE_H - 14 / 2
+#define TEXT_Y ((LINE_H-14)/2)
 
 proc_info Form;
 
@@ -84,7 +84,7 @@ void main()
 		 
 		case evReDraw:
 			sc.get();			
-			DefineAndDrawWindow(GetScreenWidth()-600/2,80,600,400,0x73,NULL,"Clipboard Viewer",NULL);
+			DefineAndDrawWindow(((GetScreenWidth()-600)/2),80,600,400,0x73,NULL,"Clipboard Viewer",NULL);
 			GetProcessInfo(#Form, SelfInfo);
 			IF (Form.status_window&ROLLED_UP) break;
 			IF (Form.height < 200) { MoveSize(OLD,OLD,OLD,200); break; }
@@ -152,7 +152,7 @@ void SelectList_DrawLine(dword i)
 		cdata.content_offset = 8;
 	cdata.content = slot_data + cdata.content_offset; 
 
-	WriteText(list.first+i/10^1*8+GAP+12, yyy+TEXT_Y, 0x90, 0x000000, itoa(list.first + i));
+	WriteText(((((((list.first+i)/10)^1)*8)+GAP)+12), yyy+TEXT_Y, 0x90, 0x000000, itoa(list.first + i));
 	EDX = ConvertSizeToKb(cdata.size);
 	WriteText(GAP+44+16, yyy+TEXT_Y, 0x90, 0x000000, EDX);
 	slot_data_type_number = cdata.type;
@@ -161,10 +161,12 @@ void SelectList_DrawLine(dword i)
 	WriteTextB(GAP+list.w - 88, yyy+TEXT_Y, 0x90, 0x006597, "TEXT  HEX");
 	DefineButton(GAP+list.w - 98, yyy, 50, LINE_H, 100+i+BT_HIDE, NULL);
 	$add edx, 200
-	$add ebx, 52 << 16 - 10 //BT_HEX
+	$add ebx, 0x0033FFF6 //BT_HEX
 	$int 64
 
-	ESI = list.w - 345 / 8;
+	ESI = list.w;
+	ESI -= 345;
+	ESI /= 8;
 	if (cdata.size - cdata.content_offset < ESI) ESI = cdata.size - cdata.content_offset;
 	WriteText(GAP+236, yyy+TEXT_Y, 0x30, 0x000000, cdata.content);
 }

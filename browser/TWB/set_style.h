@@ -197,11 +197,11 @@ void TWebBrowser::tag_li()
 		if (!style.pre) NewLine();
 		if (style.tag_list.order_type() == 'u') {
 			strcpy(#linebuf, "\31 ");
-			draw_x = style.tag_list.level * 5 - 2 * list.font_w + left_gap;
+			draw_x = ((((style.tag_list.level*5)-2)*list.font_w)+left_gap);
 		} 
 		if (style.tag_list.order_type() == 'o') {
 			sprintf(#linebuf, "%i. ", style.tag_list.inc_counter());
-			draw_x = style.tag_list.level * 5 - 1 - strlen(#linebuf) * list.font_w + left_gap;
+			draw_x = (((((style.tag_list.level*5)-1)-strlen(#linebuf))*list.font_w)+left_gap);
 		}
 	}
 }
@@ -470,7 +470,7 @@ void TWebBrowser::tag_table()
 			if (tag.opened) 
 			{
 				if (!td_pos) {
-					table.margin = list.w - cur_cell_w / 2 + BODY_MARGIN;
+					table.margin = (((list.w-cur_cell_w)/2)+BODY_MARGIN);
 					draw_x = left_gap = table.margin;
 					draw_w = cur_cell_w - BODY_MARGIN;
 				} else {

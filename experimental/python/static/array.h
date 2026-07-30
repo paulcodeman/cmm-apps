@@ -244,9 +244,9 @@
 	flen = DSDWORD[array+4];
 	IF(len>=flen)
 	{
-		news = malloc(flen<<3+8);
+		news = malloc(((flen<<3)+8));
 		DSDWORD[position] = news;
-		i = flen<<1+2;
+		i = ((flen<<1)+2);
 		while(i)
 		{
 			DSDWORD[news] = DSDWORD[array];

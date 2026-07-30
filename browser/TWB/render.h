@@ -83,7 +83,7 @@ void TWebBrowser::RenderTextbuf()
 
 		//Is a new line fits in the maximum line width?
 		if (br * list.font_w + draw_x - left_gap >= draw_w) {
-			br = draw_w - draw_x + left_gap - BODY_MARGIN / list.font_w;
+			br = ((((draw_w-draw_x)+left_gap)-BODY_MARGIN)/list.font_w);
 			if (br < 0) br = 0;
 			while(br) {
 				if (ESBYTE[lbp + br]==' ') || (ESBYTE[lbp + br]=='-') {
@@ -95,10 +95,10 @@ void TWebBrowser::RenderTextbuf()
 		}
 		//Maybe a new line is too big for the whole new line? Then we have to split it
 		if (!br) && (len * list.font_w >= draw_w) {
-			br = draw_w - draw_x + left_gap - BODY_MARGIN / list.font_w;
+			br = ((((draw_w-draw_x)+left_gap)-BODY_MARGIN)/list.font_w);
 			if (br < 0) {
 				NewLine();
-				br = draw_w - draw_x + left_gap - BODY_MARGIN / list.font_w;
+				br = ((((draw_w-draw_x)+left_gap)-BODY_MARGIN)/list.font_w);
 			}
 		}
 
@@ -151,7 +151,7 @@ bool TWebBrowser::RenderImage(dword cur_img)
 
 	if (img_w + draw_x - left_gap >= draw_w) NewLine();
 	img_y = draw_y;
-	if (img_h < list.item_h) img_y += list.item_h - img_h / 2 - 1; else img_y -= 2;
+	if (img_h < list.item_h) img_y += (((list.item_h-img_h)/2)-1); else img_y -= 2;
 	style.cur_line_h = math.max(style.cur_line_h, img_h);
 
 	img_w = math.min(img_w, canvas.bufw - draw_x);

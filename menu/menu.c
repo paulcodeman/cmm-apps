@@ -127,6 +127,7 @@ void GetColors()
 void main()
 {
 	proc_info Form;
+	int list_h;
 
 	if (!param) RunProgram("/sys/network/WebView", "http://board.kolibrios.org/viewtopic.php?f=24&t=4233#p74599");
 	
@@ -136,8 +137,10 @@ void main()
 	GetMenuWidths();
 
 	menu_w = max_name_len + max_hotkey_len + TEXT_MARGIN + TEXT_MARGIN;//23;
-	menu_h = GetSeparatorsCount() * SEP_H 
-		+ calc(names.count - GetSeparatorsCount() * ITEM_H);
+	list_h = names.count;
+	list_h -= GetSeparatorsCount();
+	list_h *= ITEM_H;
+	menu_h = GetSeparatorsCount() * SEP_H + list_h;
 
 	menu1.count = names.count;
 	// menu1.SetFont(8, 14, 10011000b);
@@ -273,7 +276,7 @@ void draw_list()
 	}
 
 	init = false;
-	if (selected) WriteText(5, selected-1*ITEM_H + menu1.y + menu1.text_y +3, 0x80, 0xEE0000, "\x10"); // ?
+	if (selected) WriteText(5, (((((selected-1)*ITEM_H)+menu1.y)+menu1.text_y)+3), 0x80, 0xEE0000, "\x10"); // ?
 }
 
 void click()

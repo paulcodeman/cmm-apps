@@ -67,7 +67,7 @@ void main()
 void draw_window()
 {
 	sc.get();
-	DefineAndDrawWindow(screen.w-WINW/2,screen.h-WINH/2,
+	DefineAndDrawWindow(((screen.w-WINW)/2),((screen.h-WINH)/2),
 		WINW+9,WINH+skin_h,0x34,sc.work,"KolibriN10",0);
 	DrawLogo();
 	if (install_complete) DrawInstallComplete(); else DrawIntro();
@@ -77,21 +77,21 @@ void DrawIntro()
 {
 	DrawTextViewArea(30, 140, WINW-60, WINH-80, 
 		T_INTRO, -1, sc.work_text);
-	DrawCaptButton(WINW-110/2, WINH-70, 110, 28, B_INSTALL, 
+	DrawCaptButton(((WINW-110)/2), WINH-70, 110, 28, B_INSTALL, 
 		0x0092D8, 0xFFFfff, T_INSTALL);
 }
 
 void DrawInstallComplete()
 {
-	draw_icon_32(WINW-32/2, 140, sc.work, 49);
+	draw_icon_32(((WINW-32)/2), 140, sc.work, 49);
 	WriteTextCenter(0,185, WINW, sc.work_text, T_COMPLETE);
-	DrawCaptButton(WINW-110/2, WINH-70, 110, 28, B_EXIT, 
+	DrawCaptButton(((WINW-110)/2), WINH-70, 110, 28, B_EXIT, 
 		0x0092D8, 0xFFFfff, T_EXIT);
 }
 
 void DrawLogo()
 {
-	#define LX -46*6+WINW/2
+	#define LX (((-46*6)+WINW)/2)
 	#define LY 25
 	WriteTextLines(LX-2, LY, 0x80, 0xF497C0, #logo, 9);
 	WriteTextLines(LX+3, LY, 0x80, 0x7ED1E3, #logo, 9);

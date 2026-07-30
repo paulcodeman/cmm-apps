@@ -15,9 +15,9 @@
 #define BTN_OPEN 2
 
 #define CELL_SIZE 43
-#define PANEL_Y CELL_SIZE+4*6 + 4
+#define PANEL_Y (((CELL_SIZE+4)*6)+4)
 #define PANEL_H 36
-#define WIN_W CELL_SIZE+4*10 + 4
+#define WIN_W (((CELL_SIZE+4)*10)+4)
 #define WIN_H PANEL_Y+PANEL_H
 
 #define ROWS 6
@@ -123,8 +123,8 @@ void Draw_Game_Pole()
 	byte j;
 	for (j = 0; j < COLS; j++)	for (i = 0; i < ROWS; i++)
 	{
-			butonsx[j*ROWS+i] = CELL_SIZE+4 * j + 4; //save coordinates to avoid 
-			butonsy[j*ROWS+i] = CELL_SIZE+4 * i + 4; //their recalculation after
+			butonsx[j*ROWS+i] = (((CELL_SIZE+4)*j)+4); //save coordinates to avoid 
+			butonsy[j*ROWS+i] = (((CELL_SIZE+4)*i)+4); //their recalculation after
 			ReDraw_Game_Button(j*ROWS + i);
 	}
 }

@@ -174,8 +174,8 @@ void LoginBoxLoop()
 
 void DrawLoginScreen()
 {				
-	panel_x = Form.cwidth - PANEL_W /2;
-	panel_y = Form.cheight - PANEL_H /2 - 5;
+	panel_x = ((Form.cwidth-PANEL_W)/2);
+	panel_y = (((Form.cheight-PANEL_H)/2)-5);
 
 	DrawBar(0,0, Form.cwidth, Form.cheight, sc.work);
 	

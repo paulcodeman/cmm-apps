@@ -35,7 +35,7 @@
 	DrawBar(x, y+h-1, w-progress_w, 1,   MixColors(PROGRESS_ACTIVE, sc.line, 200));
 	DrawBar(x+w-progress_w, y, progress_w, h, PROGRESS_BG);
 
-	strcpy(#textp, itoa(w-progress_w*100/w));
+	strcpy(#textp, itoa((((w-progress_w)*100)/w)));
 	chrcat(#textp, '%');
-	WriteText(-strlen(#textp)*8 + w / 2 + x, h/2-7+y, 0x90, 0x000000, #textp);
+	WriteText(((((-strlen(#textp)*8)+w)/2)+x), h/2-7+y, 0x90, 0x000000, #textp);
 }

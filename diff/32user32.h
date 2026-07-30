@@ -87,7 +87,7 @@
       EDI=0;//cnt
       EDX=DSDWORD[param];
       WHILE(EDX){
-        AL=DL&0xF+0x30;if(AL>'9'){AL+='A'-'9'-1;if(!mf.upcase)AL|=0x20;}
+        AL=DL;AL&=0xF;AL+=0x30;if(AL>'9'){AL+='A'-'9'-1;if(!mf.upcase)AL|=0x20;}
         bufnum[EDI]=AL;EDI++;EDX>>=4;
       }
       $pop EDX;

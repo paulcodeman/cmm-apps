@@ -108,7 +108,7 @@ void main()
 	SCREEN_SIZE_X=GetScreenWidth()+1;	
 	WIN_X = SCREEN_SIZE_X-WIN_SIZE_X-1;
 	WIN_Y = GetClientTop();
-	TEXT_X = -6*strlen(#param)+WIN_SIZE_X/2+1;
+	TEXT_X = ((((-6*strlen(#param))+WIN_SIZE_X)/2)+1);
 	TEXT_Y = WIN_SIZE_Y/2-4;
 	
 	//emulate multithread :)

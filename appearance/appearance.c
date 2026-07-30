@@ -53,6 +53,15 @@ void main()
 
 	GetIniSettings();
 
+	tabs.x = -sizeof(t_skins);
+	tabs.x -= sizeof(t_wallpapers);
+	tabs.x -= sizeof(t_screensaver);
+	tabs.x -= 3;
+	tabs.x *= 8;
+	tabs.x += WIN_W;
+	tabs.x -= TAB_P;
+	tabs.x /= 2;
+
 	tabs.add(#t_skins, #EventTabSkinsClick);	
 	tabs.add(#t_wallpapers, #EventTabWallpappersClick);
 	tabs.add(#t_screensaver, #EventTabScreensaverClick);
@@ -124,7 +133,7 @@ void main()
 void draw_window()
 {
 	sc.get();
-	DefineAndDrawWindow(screen.w-WIN_W-9/2,80,WIN_W+9,WIN_H+4+skin_h,0x74,sc.work,WINDOW_HEADER,0);
+	DefineAndDrawWindow((((screen.w-WIN_W)-9)/2),80,WIN_W+9,WIN_H+4+skin_h,0x74,sc.work,WINDOW_HEADER,0);
 
 	DrawBar(0, 0, WIN_W, PANEL_H-2, sc.work); //top
 	DrawBar(0, PANEL_H-2, LP-2, WIN_H-PANEL_H-LP+4, EDX); //left
@@ -133,8 +142,8 @@ void draw_window()
 
 	tabs.draw();
 	draw_icon_16w(tabs.x + TAB_P, LP+5, 17);
-	draw_icon_16w(sizeof(t_skins)-1*8 + TAB_P + TAB_P + tabs.x, LP+5, 6);
-	draw_icon_16w(sizeof(t_wallpapers)+sizeof(t_skins)-2*8 + TAB_P + TAB_P + TAB_P + tabs.x, LP+5, 61);
+	draw_icon_16w((((((sizeof(t_skins)-1)*8)+TAB_P)+TAB_P)+tabs.x), LP+5, 6);
+	draw_icon_16w((((((((sizeof(t_wallpapers)+sizeof(t_skins))-2)*8)+TAB_P)+TAB_P)+TAB_P)+tabs.x), LP+5, 61);
 
 	if (tabs.active_tab == TAB_SKINS)
 	{
@@ -273,7 +282,7 @@ void SelectList_DrawLine(dword i)
 	strcpy(filename, list.get(i_abs));
 	if (EAX = strrchr(filename,'/')) filename += EAX;
 	if (ESBYTE[filename]=='T') && (ESBYTE[filename+1]=='_') filename+=2;
-	EAX = math.min(strrchr(filename,'.')-1, LIST_W - 24 / 8);
+	EAX = math.min(strrchr(filename,'.')-1, ((LIST_W-24)/8));
 	if(EAX) ESBYTE[filename+EAX] = '\0';
 
 	//save current item for tab change

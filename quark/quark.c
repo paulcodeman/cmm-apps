@@ -246,7 +246,7 @@ void HandleMouseEvent()
 			}
 
 			//as we have lines of variable width, we need to recalculate column_max
-			list.column_max = lines.len(mouse.y - list.y / list.item_h + list.first);
+			list.column_max = lines.len((((mouse.y-list.y)/list.item_h)+list.first));
 
 			list.ProcessMouse(mouse.x, mouse.y);
 
