@@ -343,7 +343,7 @@ void DrawLineSeparator()
 void DrawRoad()
 {
 	DrawLineSeparator();
-	DrawObstacle((((don_w+10)*don_x)+186),don_y);
+	DrawObstacle(((don_w+(10*don_x))+186),don_y);
 	DrawBus(bus_x*80+200,bus_y);
 }
 
