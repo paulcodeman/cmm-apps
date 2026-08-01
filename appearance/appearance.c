@@ -191,7 +191,7 @@ void draw_timeout()
 void add_filesnames_into_the_list()
 {
 	int j;
-	for (j=0; j<select_list.count; j++) {
+	for (j=0; j+1<select_list.count; j++) {
 		miniprintf(#param,"%s/",#folder_path);
 		strcat(#param, io.dir.position(ESDWORD[j*4+fmas]));
 		list.add(#param);

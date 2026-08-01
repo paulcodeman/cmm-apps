@@ -26,7 +26,9 @@ struct collection_int
 
 :void collection_int::add(dword _in) {
 	unsigned i;
-	if (!buf) || (count + 1 * DWSIZE4 >= buf_size) {
+	dword need;
+	need = count * DWSIZE4 + DWSIZE4;
+	if (!buf) || (need >= buf_size) {
 		buf_size += 4096 * 5;
 		buf = realloc(buf, buf_size);
 	}
