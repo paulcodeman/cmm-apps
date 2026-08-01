@@ -60,11 +60,12 @@ void CANVAS::Fill(dword start_pointer, i_fill_color)
 
 void CANVAS::DrawBar(dword x, y, w, h, color)
 {
-	dword i, j;
+	dword i, j, bound;
 	if (BufIsInvalid()) return;
 	if (y + h >= bufh) IncreaseBufSize();
 	for (j=0; j<h; j++)	{
-		for (i = ((((((y+j)*bufw)+x)<<2)+8)+buf_data); i<y+j*bufw+x+w<<2+8+buf_data; i+=4) {
+		bound = (((((y+j)*bufw)+x+w)<<2)+8)+buf_data;
+		for (i = ((((((y+j)*bufw)+x)<<2)+8)+buf_data); i<bound; i+=4) {
 			ESDWORD[i] = color;
 		}
 	}
@@ -73,14 +74,15 @@ void CANVAS::DrawBar(dword x, y, w, h, color)
 void CANVAS::DrawImage(dword x, y, w, h, img)
 {
 	dword i, j, p=0;
-	dword ystart;
+	dword ystart, bound;
 	if (BufIsInvalid()) return;
 	if (y < 0) y = 0;
 	if (x < 0) x = 0;
 	while (y + h >= bufh) IncreaseBufSize(); //WHY NOT WORKING?
 	for (j=0; j<h; j++)	{
 		ystart = (((y+j)*bufw)+x);
-		for (i = (((ystart<<2)+8)+buf_data); i<ystart+w<<2+8+buf_data; i+=4) {
+		bound = (((ystart+w)<<2)+8)+buf_data;
+		for (i = (((ystart<<2)+8)+buf_data); i<bound; i+=4) {
 			ESDWORD[i] = ESDWORD[img+p];
 			p+=4;
 		}
