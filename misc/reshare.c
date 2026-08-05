@@ -69,13 +69,17 @@ unsigned int size16;
 
 void main()
 {
+	dword icons18_path;
+
 	mem_init();
 	load_dll(libimg, #libimg_init, 1);
 
-	icons32.load("/SYS/ICONS32.PNG"); size32 = icons32.h * 32 * 4;
-	icons18.load("/SYS/ICONS18.PNG"); size16 = icons18.h * 18 * 4;
+	icons32.load("/SYS/ICONS32.PNG"); size32 = icons32.h * icons32.w * 4;
+	icons18_path = "/SYS/ICONS18.PNG";
+	if (!file_exists(icons18_path)) icons18_path = "/SYS/ICONS16.PNG";
+	icons18.load(icons18_path); size16 = icons18.h * icons18.w * 4;
 
-	if (GetProcessesCount("@RESHARE")>1) {
+	if ((GetProcessesCount("@RESHARE") + GetProcessesCount("RESHARE")) > 1) {
 		start_ui();
 	} else {
 		start_daemon();
@@ -96,15 +100,22 @@ void start_daemon()
 	char* shared_chbox;
 
 	shared_chbox = memopen("CHECKBOX", sizeof(checkbox_flag), SHM_CREATE+SHM_WRITE);
+	if (!shared_chbox) {
+		start_ui();
+		return;
+	}
 	memmov(shared_chbox, #checkbox_flag, sizeof(checkbox_flag));
 
-	shared_i32 = memopen("ICONS32", size32, SHM_CREATE+SHM_WRITE);
-	memmov(shared_i32, icons32.imgsrc, size32);
-	img_destroy stdcall(icons32.image);
+	if (size32) {
+		shared_i32 = memopen("ICONS32", size32, SHM_CREATE+SHM_WRITE);
+		if (shared_i32) memmov(shared_i32, icons32.imgsrc, size32);
+		if (icons32.image) img_destroy stdcall(icons32.image);
+	}
 
-	shared_i16 = memopen("ICONS18", size16, SHM_CREATE + SHM_WRITE);
-	memmov(shared_i16, icons18.imgsrc, size16);
-	//img_destroy stdcall(icons18.image);
+	if (size16) {
+		shared_i16 = memopen("ICONS18", size16, SHM_CREATE + SHM_WRITE);
+		if (shared_i16) memmov(shared_i16, icons18.imgsrc, size16);
+	}
 
 	shared_i16w = memopen("ICONS18W", size16, SHM_CREATE + SHM_WRITE);
 
@@ -113,7 +124,7 @@ void start_daemon()
 		$push sc.work
 		sc.get();
 		$pop eax
-		if (sc.work != EAX) {
+		if (shared_i16w) && (sc.work != EAX) {
 			memmov(shared_i16w, icons18.imgsrc, size16);
 			replace_2cols(shared_i16w, size16, 0xffFFFfff, sc.work, 0xffCACBD6, sc.dark);
 		}
@@ -207,20 +218,21 @@ void draw_tab_icons32()
 	DrawBar(0, RESY-PAD, WINW, WINH-RESY+PAD, sc.work);
 	if (active_tab & ACTIVE_ICONS32) {
 		iconimg = icons32.imgsrc;
-		iconw = 32;
+		iconw = icons32.w;
 		iconh = icons32.h;
 	} else if (active_tab & ACTIVE_ICONS18) {
 		iconimg = icons18.imgsrc;
-		iconw = 18;
+		iconw = icons18.w;
 		iconh = icons18.h;
 	} else if (active_tab & ACTIVE_ICONS18W) {
 		iconimg = memopen("ICONS18W", NULL, SHM_READ);
-		iconw = 18;
+		iconw = icons18.w;
 		iconh = icons18.h;
 	} else {
 		PutImage(((WINW-13)/2), ((((WINH-RESY)-13)/2)+RESY), 13, 13, #checkbox_flag);
 		return;
 	}
+	if (!iconimg) || (!iconw) return;
 
 	for (i = 0; i < iconh/iconw; i++)
 	{
