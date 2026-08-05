@@ -169,6 +169,7 @@ void LoadIcons()
 {
 	dword selected_shadow = MixColors(col.selec, 0, 200);
 	dword non_white_shadow = MixColors(col.list_bg, 0, 200);
+	dword icons18_path;
 	if (big_icons.checked) 
 	{
 		icons32_default.load("/sys/icons32.png");
@@ -184,8 +185,10 @@ void LoadIcons()
 		icons32_default.replace_color(0x00000000, col.list_bg);
 		icons32_selected.replace_color(0x00000000, col.selec);
 	} else {
-		icons18_default.load("/sys/icons18.png");
-		icons18_selected.load("/sys/icons18.png");
+		icons18_path = "/sys/icons18.png";
+		if (!file_exists(icons18_path)) icons18_path = "/sys/icons16.png";
+		icons18_default.load(icons18_path);
+		icons18_selected.load(icons18_path);
 		icons18_selected.replace_2colors(0xffFFFfff, col.selec, 0xffCACBD6, selected_shadow);
 		if (col.list_bg!=0xFFFfff) {
 			icons18_default.replace_2colors(0xffFFFfff, col.list_bg, 0xffCACBD6, non_white_shadow);

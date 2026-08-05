@@ -4,6 +4,7 @@ struct ICONS_INI {
 	collection_int i18;
 	collection_int i32;
 	byte loaded;
+	byte legacy;
 	int get();
 	void load();
 	void put();
@@ -59,6 +60,11 @@ void ICONS_INI::load()
 {
 	if (loaded) return;
 	loaded = true;
+	if (!file_exists(icons_ini.path)) {
+		icons_ini.path = "/sys/File managers/icons.ini";
+		legacy = true;
+		return;
+	}
 	ini_enum_keys stdcall (icons_ini.path, "icons18", #icons_ini_enum_key);
 	ini_enum_keys stdcall (icons_ini.path, "icons32", #icons_ini_enum_key);
 }
@@ -77,6 +83,19 @@ int ICONS_INI::get(dword _file_path, _ext, int size)
 	}
 	strlcpy(#ext, _ext, sizeof(ext));
 	strlwr(#ext);
+	if (legacy) {
+		if (size != 32) {
+			if (size == 18) {
+				icons_ini.section = "icons18";
+				ext_pos = icons_ini.GetInt(#ext, -1);
+				if (ext_pos != -1) return ext_pos;
+			}
+			icons_ini.section = "icons16";
+			return icons_ini.GetInt(#ext, 2);
+		}
+		icons_ini.section = "icons32";
+		return icons_ini.GetInt(#ext, 95);
+	}
 	ext_pos = exts.get_pos_by_name(#ext);
 	if (ext_pos != -1) {
 		if (size == 18) return i18.get(ext_pos);
@@ -92,6 +111,7 @@ void DrawIconByExtension(dword file_path, extension, xx, yy, fairing_color)
 	int icon_n = 2;
 	dword selected_image;
 	dword default_image;
+	ini_icons.load();
 
 	if (ESBYTE[file_path+1]!='k') && (ESBYTE[file_path+1]!='s') && (chrnum(file_path, '/')==2) {
 		if (ESBYTE[file_path+1]=='/') ext[0] = ESBYTE[file_path+2];
@@ -101,8 +121,15 @@ void DrawIconByExtension(dword file_path, extension, xx, yy, fairing_color)
 			icons_ini.section = "drives32";
 			icon_n = icons_ini.GetInt(#ext, 50);
 		} else {
-			icons_ini.section = "drives18";
-			icon_n = icons_ini.GetInt(#ext, 50);
+			icon_n = -1;
+			if (icon_size == 18) {
+				icons_ini.section = "drives18";
+				icon_n = icons_ini.GetInt(#ext, -1);
+			}
+			if (icon_n == -1) {
+				icons_ini.section = "drives16";
+				icon_n = icons_ini.GetInt(#ext, 50);
+			}
 		}
 	} else {
 		icon_n = ini_icons.get(file_path, extension, icon_size);
@@ -115,6 +142,9 @@ void DrawIconByExtension(dword file_path, extension, xx, yy, fairing_color)
 		selected_image = icons18_selected.image;
 		default_image = icons18_default.image;
 	}
+	if (!selected_image) selected_image = default_image;
+	if (!default_image) default_image = selected_image;
+	if (!selected_image) return;
 
 	if (fairing_color==col.selec) {
 		img_draw stdcall(selected_image, xx, yy, icon_size, icon_size, 0, icon_n*icon_size);
