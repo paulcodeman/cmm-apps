@@ -21,12 +21,12 @@ struct _pixel_state
 
 void _pixel_state::set_drawable_state(int _r, _c, _state)
 {
-	draw[((image_columns*_r)+_c)] = _state;
+	draw[image_columns*_r + _c] = _state;
 }
 
 bool _pixel_state::is_drawable(int _r, _c)
 {
-	return draw[((image_columns*_r)+_c)];
+	return draw[image_columns*_r + _c];
 }
 
 void _pixel_state::reset_and_set_all_drawable()
@@ -78,7 +78,7 @@ void _image::create(int _rows, _columns)
 
 void _image::set_pixel(int _r, _c, _color)
 {
-	mas[((columns*_r)+_c)] = _color;
+	mas[columns*_r + _c] = _color;
 }
 
 void _image::draw_line(int x1, int y1, int x2, int y2, dword color) {
@@ -159,7 +159,7 @@ void _image::fill(int _r, _c, _color)
 
 dword _image::get_pixel(int _r, _c)
 {
-	return mas[((columns*_r)+_c)];
+	return mas[columns*_r + _c];
 }
 
 void _image::set_image(dword _inbuf)
