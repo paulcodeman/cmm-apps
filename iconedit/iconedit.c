@@ -455,12 +455,12 @@ void DrawEditArea()
 
 	DrawRectangle(wrapper.x-1, wrapper.y-1, wrapper.w, wrapper.h, sc.line);
 
-	if (left_side>0)
+	if (top_side>0)
 	{
 		DrawBar(wrapper.x, wrapper.y, wrapper.w-1, top_side, color1); //top
 		DrawBar(wrapper.x, wrapper.y+wrapper.h-top_side-1, wrapper.w-1, top_side, color1); //bottom
 	}
-	if (top_side>0)
+	if (left_side>0)
 	{
 		//left
 		DrawBar(wrapper.x, wrapper.y+top_side, left_side, 
