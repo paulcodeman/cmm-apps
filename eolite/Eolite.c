@@ -260,7 +260,7 @@ void main()
 						DrawStatusBar();
 						List_ReDraw();
 					} else {
-						if (mouse.y - files.y / files.item_h + files.first == files.cur_y) EventOpen(0);
+						if (((mouse.y-files.y)/files.item_h)+files.first == files.cur_y) EventOpen(0);
 					}
 				}
 				//file menu
