@@ -33,13 +33,13 @@ void about_dialog()
 				break;
 				
 		case evReDraw:
-				DefineAndDrawWindow(((Form.left+Form.width)/2),(((Form.top+Form.height)/2)-114),300,300+skin_h,0x34,sc.work,T_ABOUT,0);
+				DefineAndDrawWindow((Form.left + Form.width) / 2,(Form.top + Form.height) / 2 - 114,300,300+skin_h,0x34,sc.work,T_ABOUT,0);
 				GetProcessInfo(#about_form, SelfInfo);
 				if (about_form.status_window>2) break;
 				logo_pal[0] = sc.work;
 				ESDWORD[#logo_pal+16] = sc.dark;
-				PutPaletteImage(#logo,86,86,((about_form.cwidth-86)/2),10,8,#logo_pal);
-				about_x = (((-strlen(ABOUT_TITLE)*18)+about_form.cwidth)/2);
+				PutPaletteImage(#logo,86,86,(about_form.cwidth - 86) / 2,10,8,#logo_pal);
+				about_x = (about_form.cwidth - strlen(ABOUT_TITLE) * 18) / 2;
 				WriteTextB(about_x+2,107,0x82,0xD49CD2,ABOUT_TITLE);
 				WriteTextB(about_x,105,0x82,0x9D129D,ABOUT_TITLE);
 				WriteTextLines(73,163,0x90,sc.work_text,"    By Leency\nand KolibriOS Team\n    2008-2025",20);

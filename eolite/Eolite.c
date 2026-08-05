@@ -260,7 +260,7 @@ void main()
 						DrawStatusBar();
 						List_ReDraw();
 					} else {
-						if (((mouse.y-files.y)/files.item_h)+files.first == files.cur_y) EventOpen(0);
+						if ((mouse.y - files.y) / files.item_h + files.first == files.cur_y) EventOpen(0);
 					}
 				}
 				//file menu
@@ -307,7 +307,7 @@ void main()
 			{
 				if (sc_slider_h/2+files.y>mouse.y) || (mouse.y<0) || (mouse.y>4000) mouse.y=sc_slider_h/2+files.y; //anee eo?ni? iaa ieiii
 				id = files.first;
-				files.first = ((((-sc_slider_h/2)+mouse.y)-files.y)*files.count);
+				files.first = (mouse.y - files.y - sc_slider_h / 2) * files.count;
 				files.first /= files.h - 18;
 				if (files.visible+files.first>files.count) files.first=files.count-files.visible;
 				if (files.first<0) files.first=0;
@@ -503,7 +503,7 @@ void main()
 							break;
 					case SCAN_CODE_MENU:
 							mouse.x = files.x+15;
-							mouse.y = ((((files.cur_y-files.first)*files.item_h)+files.y)+5);
+							mouse.y = (files.cur_y - files.first) * files.item_h + files.y + 5;
 							EventShowListMenu();
 							break;
 					case SCAN_CODE_DEL:
@@ -616,8 +616,8 @@ void draw_window()
 	}
 	//main rectangles
 	DrawRectangle(1,40,Form.cwidth-3,Form.cheight - 42-status_bar_h,sc.line);
-	DrawBar(0,39,1,-status_bar_h + Form.cheight - 40, sc.work);
-	EBX = (((Form.cwidth-1)*65536)+1);
+	DrawBar(0,39,1,Form.cheight - status_bar_h - 40, sc.work);
+	EBX = (Form.cwidth - 1) * 65536 + 1;
 	$int 64
 	for (i=0; i<6; i++) DrawBar(0, 34+i, Form.cwidth, 1, MixColors(sc.dark, sc.work, i*10));
 	for (i=0; i<6; i++) DrawBar(0, 5-i, Form.cwidth, 1, MixColors(sc.light, sc.work, i*10));
@@ -643,7 +643,7 @@ void DrawButtonsAroundList()
 	DrawFlatButtonSmall(files.x + files.w -  68, files.y-17,68,16,33,T_SIZE);
 	DrawFlatButtonSmall(files.x + files.w,       files.y-17,16,16, 0,"\x18");
 	DrawFlatButtonSmall(files.x + files.w,files.y+files.h-16,16,16,0,"\x19");
-	if (sort_type==1) sorting_arrow_x = ((((files.w-141)/2)+files.x)+18);
+	if (sort_type==1) sorting_arrow_x = (files.w - 141) / 2 + files.x + 18;
 	if (sort_type==2) sorting_arrow_x = files.x + files.w - 90;
 	if (sort_type==3) sorting_arrow_x = strlen(T_SIZE)*3-30+files.x+files.w;
 	WriteText(sorting_arrow_x,files.y-12,0x80, sc.work_text, sorting_arrow_t);
@@ -656,10 +656,10 @@ void DrawButtonsAroundList()
 void DrawFuncButtonsInKfm()
 {
 	int i, x=0, len, min_w=0, padding;
-	for (i=0; i<10; i++) min_w += (((strlen(kfm_func[i])+2)*6)+2);
-	padding = (((Form.cwidth-min_w)+4)/10);
+	for (i=0; i<10; i++) min_w += (strlen(kfm_func[i]) + 2) * 6 + 2;
+	padding = (Form.cwidth - min_w + 4) / 10;
 	for (i=0; i<10; i++) {
-		len = (((strlen(kfm_func[i])+2)*6)+padding);
+		len = (strlen(kfm_func[i]) + 2) * 6 + padding;
 		if (i==9) len = Form.cwidth - x - 3;
 		DrawBar(x, Form.cheight - 19, 1, 17, sc.work);
 		DrawFuncButton(x+1, Form.cheight - 19, len, i+KFM_FUNC_ID+1, i+1, kfm_func[i]);
@@ -693,7 +693,7 @@ void DrawStatusBar()
 void DrawFilePanels()
 {
 	int files_y = files.y;
-	int w2 = (((-Form.cwidth-1)/2)+Form.cwidth);
+	int w2 = Form.cwidth - (Form.cwidth + 1) / 2;
 	int h2 = Form.cheight-files_y-2 - status_bar_h;
 	if (!efm)
 	{
@@ -814,7 +814,7 @@ void Line_ReDraw(dword bgcol, signed filenum){
 		  file_name_off,
 		  file_size=0,
 		  y=filenum*files.item_h+files.y,
-		  icon_y = (((files.item_h-icon_size)/2)+y);
+		  icon_y = (files.item_h - icon_size) / 2 + y;
 		  BDVK file;
 		  char full_path[4096];
 		  dword separator_color;
@@ -867,7 +867,7 @@ void Line_ReDraw(dword bgcol, signed filenum){
 		file_size = ConvertSize64(file.sizelo, file.sizehi);
 		if (ext1) && (strlen(ext1)<9) WriteTextCenter(files.x+files.w-140, files.text_y+y+1, 72, col.list_gb_text, ext1);
 	}
-	if (file_size) WriteText((((((7-strlen(file_size))*6)+files.x)+files.w)-58),
+	if (file_size) WriteText((7 - strlen(file_size)) * 6 + files.x + files.w - 58,
 			files.text_y+y+1, files.font_type, col.list_gb_text, file_size);
 
 	if (attr&ATR_HIDDEN) || (attr&ATR_SYSTEM) text_col=col.list_text_hidden;
@@ -908,7 +908,7 @@ void Line_ReDraw(dword bgcol, signed filenum){
 			}
 			strcpy(#label_file_name+strlen(#label_file_name)-2, "...");
 		}
-		kfont.WriteIntoWindow(files.x + icon_size+7, (((files.item_h-kfont.height)/2)+y),
+		kfont.WriteIntoWindow(files.x + icon_size+7, (files.item_h - kfont.height) / 2 + y,
 			bgcol, text_col, kfont.size.pt, #label_file_name);
 	}
 	DrawIconByExtension(#full_path, ext1, files.x+4, icon_y, bgcol);
@@ -929,7 +929,7 @@ inline Sorting()
 		folder_count = d;
 		return;
 	}
-	for (j=files.count-1, file_off=((((files.count-1)*304)+buf)+32); j>=0; j--, file_off-=304;)  //files | folders
+	for (j=files.count-1, file_off=(files.count - 1) * 304 + buf + 32; j>=0; j--, file_off-=304;)  //files | folders
 	{
 		if (dir_at_fat16) && (file_name_is_8_3(file_off+40)) strttl(file_off+40);
 		if (ESDWORD[file_off] & ATR_FOLDER) {
@@ -1144,7 +1144,7 @@ void ShowPopinForm(byte _popin_type)
 					if (strlen(#file_name)<28) {
 						sprintf(#param,"%s ?",#file_name);
 					} else {
-						strncpy(#param, #file_name, (((POPIN_W-20)/6)-4));
+						strncpy(#param, #file_name, (POPIN_W - 20) / 6 - 4);
 						strcat(#param, "...?");
 					}
 				}

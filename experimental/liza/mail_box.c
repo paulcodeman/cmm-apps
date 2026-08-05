@@ -74,7 +74,7 @@ void MailBoxNetworkProcess() {
 				break;
 
 		case GET_ANSWER_NLIST:
-				ticks = Receive(socketnum, listpointer, (((listbuffer+30)*mail_list.count)-listpointer), MSG_DONTWAIT);
+				ticks = Receive(socketnum, listpointer, (listbuffer + 30) * mail_list.count - listpointer, MSG_DONTWAIT);
 				if (ticks == 0xffffffff) break;
 				listpointer = listpointer + ticks;
 
@@ -317,13 +317,13 @@ void DrawMailList() {
 		on_x = strlen(itoa(i+mail_list.first+1))*6;
 		letter_icons_pal[0]=sel_col;
 		PutPaletteImage(sizeof(letter_icons)/3*direction + #letter_icons, 18,12, on_x+18,
-			(((mail_list.item_h-12)/2)+on_y), 8, #letter_icons_pal);
+			(mail_list.item_h - 12) / 2 + on_y, 8, #letter_icons_pal);
 		WriteText(on_x + 42, on_y+5, 0x80, 0, atr.GetSubject(i+mail_list.first+1));
 		DrawBar(0, on_y + mail_list.item_h-1, mail_list.w, 1, 0xCCCccc);
 		WriteText(10, on_y+5, 0x80, 0, itoa(i+mail_list.first+1));
 		WriteText(mail_list.w - 40, on_y+5, 0x80, 0, ConvertSize(atr.GetSize(i+mail_list.first+1)));
 	}
-	DrawBar(0, i*mail_list.item_h + mail_list.y, mail_list.w, -i*mail_list.item_h+mail_list.h, 0xFFFfff);
+	DrawBar(0, i*mail_list.item_h + mail_list.y, mail_list.w, mail_list.h - i * mail_list.item_h, 0xFFFfff);
 	DrawScroller1();
 }
 
@@ -332,8 +332,8 @@ void DrawLetterInfo() {
 	DrawBar(0, lt_y, mail_list.w, 1, sc.line);
 	DrawBar(0, lt_y+1, Form.cwidth, 1, LBUMP);
 	DrawBar(0, lt_y+2, Form.cwidth, LIST_INFO_H-4, sc.work);
-	WriteText(((mail_list.w-30)/2), lt_y, 0x80, 0x888888, "= = =");
-	WriteText(((mail_list.w-30)/2), lt_y+1, 0x80, 0xEeeeee, "= = =");
+	WriteText((mail_list.w - 30) / 2, lt_y, 0x80, 0x888888, "= = =");
+	WriteText((mail_list.w - 30) / 2, lt_y+1, 0x80, 0xEeeeee, "= = =");
 	DrawBar(0, lt_y+LIST_INFO_H-2, Form.cwidth, 1, sc.line); //bottom
 	DrawBar(0, lt_y+LIST_INFO_H-1, Form.cwidth, 1, 0xdfdfdf);
 	DrawBar(0, lt_y+LIST_INFO_H  , Form.cwidth, 1, 0xf0f0f0);

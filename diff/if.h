@@ -37,7 +37,7 @@ drawline(int x,y,width,linex,s1,s2,ln)
 	if(s1==-1)
 	{
 		FillMemory(#str[1],width-2,'·');
-		FillMemory(#attr[2],((width-2)*2),7);
+		FillMemory(#attr[2],(width - 2) * 2,7);
 	}else{//строка присутствует
 		x2=1;
 		width2=width;
@@ -93,7 +93,7 @@ int  titlelen;
 	{
 		wsprintf(#temp,"[%6d]",line);
 		CopyMemory(xs1-9+#str,#temp,8);
-		FillMemory((((xs1-8)*2)+#attr),12,0x19);
+		FillMemory((xs1 - 8) * 2 + #attr,12,0x19);
 	}
 	printstrat(x1,y1,xs1,#str,#attr);
 }

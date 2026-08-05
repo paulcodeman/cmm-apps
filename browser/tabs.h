@@ -71,7 +71,7 @@ int GetTabWidth()
 {
 	if (tab.count == TABS_MAX) return Form.cwidth / tab.count;
 	if (tab.count * DEFAULT_TABW + TAB_H < Form.cwidth) return DEFAULT_TABW; else 
-	return (((Form.cwidth-TAB_H)-2)/tab.count);
+	return (Form.cwidth - TAB_H - 2) / tab.count;
 }
 
 void DrawTab(int _id)
@@ -92,7 +92,7 @@ void DrawTab(int _id)
 	}
 	if (tabdata[_id].header) {
 		strncpy(#header_no_version, #tabdata[_id].header, strlen(#tabdata[_id].header)-sizeof(version)-2);
-		strncpy(#name, #header_no_version, (((tab_w-CLOSE_S)/6)-2));
+		strncpy(#name, #header_no_version, (tab_w - CLOSE_S) / 6 - 2);
 	}
 	DrawBar(xxx, TOOLBAR_H, 1, TAB_H, sc.dark);
 	DrawBar(xxx+1, TOOLBAR_H, tab_w-1, TAB_H-1, bgcol);

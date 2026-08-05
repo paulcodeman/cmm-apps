@@ -113,7 +113,7 @@ void SearchThread()
 			} else {
 				SelectList_DrawLine(select_list.cur_y);
 
-				clicked_item = (((mouse.y-select_list.y)/select_list.item_h)+select_list.first);
+				clicked_item = (mouse.y - select_list.y) / select_list.item_h + select_list.first;
 				
 				if (select_list.MouseOver(mouse.x, mouse.y)) 
 				{
@@ -170,7 +170,7 @@ void SearchThread()
 		 
 		case evReDraw:
 			sc.get();			
-			DefineAndDrawWindow(((screen.w-600)/2),100,640,600,0x73,sc.work,T_WINDOW_HEADER,0);
+			DefineAndDrawWindow((screen.w - 600) / 2,100,640,600,0x73,sc.work,T_WINDOW_HEADER,0);
 			GetProcessInfo(#Form, SelfInfo);
 			IF (Form.status_window&ROLLED_UP) break;
 			if (Form.width  < 370) { MoveSize(OLD,OLD,370,OLD); break; }

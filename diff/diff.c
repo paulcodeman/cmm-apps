@@ -115,14 +115,14 @@ console() {
 	WHILE(i){
 	  i--;
 	  EBX=srcfilelines.At(i); EBX=DSBYTE[EBX];
-	  DSDWORD[((i<<2)+srcfilelinks)]=cache[EBX*4];
+	  DSDWORD[(i << 2) + srcfilelinks]=cache[EBX*4];
 	  cache[EBX*4]=i;
 	}
 	FillMemory(#cache,sizeof(cache),-1); i=dstfilelines.Count;
 	WHILE(i){
 	  i--;
 	  EBX=dstfilelines.At(i); EBX=DSBYTE[EBX];
-	  DSDWORD[((i<<2)+dstfilelinks)]=cache[EBX*4];
+	  DSDWORD[(i << 2) + dstfilelinks]=cache[EBX*4];
 	  cache[EBX*4]=i;
 	}
 
@@ -149,7 +149,7 @@ console() {
 			 &&(!strcmp(dstfilelines.At(bdp+bsc),srcfilelines.At(bs+bsc)))bsc++;
 		  BREAK;
 		}
-		if(DSBYTE[s2]==s1)bs=DSDWORD[((bs<<2)+srcfilelinks)];else bs++;
+		if(DSBYTE[s2]==s1)bs=DSDWORD[(bs << 2) + srcfilelinks];else bs++;
 	  }
 	  bdc=0;
 	  p=srcfilelines.At(bsp);//current src position
@@ -169,7 +169,7 @@ console() {
 			 &&(!strcmp(srcfilelines.At(bsp+bdc),dstfilelines.At(bd+bdc)))bdc++;
 		  BREAK;
 		}
-		if(DSBYTE[s2]==s1)bd=DSDWORD[((bd<<2)+dstfilelinks)];else bd++;
+		if(DSBYTE[s2]==s1)bd=DSDWORD[(bd << 2) + dstfilelinks];else bd++;
 	  }
 
 	  if(bsc<bdc)

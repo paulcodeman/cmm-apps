@@ -40,7 +40,7 @@ inline long unirand0(void)
 	 save = __generator;
 	 __generator^=MASK_RAND;   /* avoid __generator==0 */
 	 k=__generator/IQ_RAND;
-	 tmp=(__generator-(k*IQ_RAND));
+	 tmp=__generator - k * IQ_RAND;
 	 __generator*=IA_RAND*tmp;
 	 __generator-=IR_RAND*k;
 	 if(__generator<0) __generator+=IM_RAND;
@@ -61,7 +61,7 @@ inline long rand(signed long x1,x2)
 	RAND_A<<=1;
 	__generator^=RAND_A;
 	xx=x2;
-	if(x1<0)xx+=-x1;
+	if(x1<0)xx-=x1;
 	tmp = __generator%xx;
 	if(tmp<0)tmp=-tmp;
 	tmp+=x1;

@@ -22,8 +22,8 @@ void SelectList_Draw()
 	{
 		SelectList_DrawLine(i); //NEED TO BE IMPLEMENTED IN APP
 	}
-	DrawBar(select_list.x,i*select_list.item_h+select_list.y, select_list.w, -i*select_list.item_h+ select_list.h, 0xFFFfff);
-	if (!select_list.count) WriteText((((((-15*8)+select_list.w)/2)+select_list.x)+1), 
+	DrawBar(select_list.x,i*select_list.item_h+select_list.y, select_list.w, select_list.h - i * select_list.item_h, 0xFFFfff);
+	if (!select_list.count) WriteText((select_list.w - 15 * 8) / 2 + select_list.x + 1,
 		select_list.h / 2 - 8 + select_list.y, 0x90, 0x999999, T_SELECT_LIST_NO_DATA);
 	SelectList_DrawScroller();
 }

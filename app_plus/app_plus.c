@@ -87,7 +87,7 @@ void main()
 			if (AL == SCAN_CODE_ENTER) {
 				EventButton(active_button_id);
 			} else if (AL == SCAN_CODE_TAB) {
-				active_button_id = (((active_button_id-10)^1)+10);
+				active_button_id = ((active_button_id - 10) ^ 1) + 10;
 				DrawButtons();
 			}
 			break;
@@ -100,7 +100,7 @@ void main()
 void draw_window()
 {
 	sc.get();
-	DefineAndDrawWindow(((screen.w-WINW)/2), 100, WINW, WINH+skin_h, 0x34, sc.work, WINDOW_TITLE_TEXT,0);
+	DefineAndDrawWindow((screen.w - WINW) / 2, 100, WINW, WINH+skin_h, 0x34, sc.work, WINDOW_TITLE_TEXT,0);
 	draw_icon_16w(CONX+2, CONY-3, 5);
 	WriteTextB(CONX+27+2,CONY+2,0x81,MixColors(sc.work, 0xB92234,220),CONTENT_HEADER_TEXT);
 	WriteTextB(CONX+27,CONY,0x81,0xB92234,CONTENT_HEADER_TEXT);

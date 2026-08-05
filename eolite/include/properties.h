@@ -282,7 +282,7 @@ void DrawPropertiesWindow()
 		DrawDateTime(120, y.inc(20), sc.work_text, #file_info_general.datelastedit, #file_info_general.timelastedit);			
 	}
 
-	DrawFrame(10, y.set(pform.cheight - 143), -10*2 + pform.cwidth - 2, 92, FLAGS);
+	DrawFrame(10, y.set(pform.cheight - 143), pform.cwidth - 10 * 2 - 2, 92, FLAGS);
 	ch_read_only.draw(24, y.inc(18));
 	ch_hidden.draw(24, y.inc(24));
 	ch_system.draw(24, y.inc(24));

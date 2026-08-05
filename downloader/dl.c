@@ -165,15 +165,15 @@ void DrawWindow()
 		DrawBar(GAPX, 102, WIN_W - GAPX - GAPX+1, 24+1, sc.work);
 		DeleteButton(BTN_DIR);
 		DeleteButton(BTN_NEW);
-		DrawDlButton(((WIN_W-BUT_W)/2), BTN_START, T_DOWNLOAD);
+		DrawDlButton((WIN_W - BUT_W) / 2, BTN_START, T_DOWNLOAD);
 		autoclose.disabled = false;
 	} else if (http.transfer) {
-		DrawDlButton(((WIN_W-BUT_W)/2), BTN_STOP, T_CANCEL);
+		DrawDlButton((WIN_W - BUT_W) / 2, BTN_STOP, T_CANCEL);
 		DrawDownloadingProgress();
 	} else {
 		autoclose.disabled = true;
 		DrawDlButton(GAPX, BTN_RUN, T_RUN);
-		DrawDlButton(((WIN_W-BUT_W)/2), BTN_DIR, T_OPEN_DIR);
+		DrawDlButton((WIN_W - BUT_W) / 2, BTN_DIR, T_OPEN_DIR);
 		DrawDlButton(WIN_W-BUT_W-GAPX, BTN_NEW, T_NEW);  
 	}
 
@@ -418,7 +418,7 @@ void CalculateDownloadSpeed()
 	if (time.old) {
 		time.gone = time.cur - time.old;
 		if (time.gone >= 200) {
-			speed = (((http.content_received-netdata_received)/time.gone)/10);
+			speed = (http.content_received - netdata_received) / time.gone / 10;
 			time.old = time.cur;
 			netdata_received = http.content_received;
 		}

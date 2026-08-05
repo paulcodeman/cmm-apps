@@ -20,7 +20,7 @@ void DrawScroll(bool _scroll_used) {
 		sc_slider_h = sc_h + 1;
 	} else {
 		sc_slider_y = files.first * sc_h / files.count + sc_y - 1;
-		sc_slider_h = ((((sc_h*files.visible)-files.visible)/files.count)+2);
+		sc_slider_h = (sc_h * files.visible - files.visible) / files.count + 2;
 		if (sc_slider_h < 20) {
 			sc_slider_h = 20; //set minimal scroll height
 		}
@@ -76,7 +76,7 @@ void DrawFlatButtonSmall(dword x,y,width,height,id,text)
 	PutPixel(x+width-1, y+1, sc.dark);
 	DrawFilledBar(x+2, y+2, width-3, height-3);
 	if (id) DefineHiddenButton(x+1,y+1,width-2,height-2,id);
-	WriteText((((((-strlen(text)*6)+width)/2)+x)+1),height/2+y-3,0x80,sc.work_text,text);
+	WriteText((width - strlen(text) * 6) / 2 + x + 1,height/2+y-3,0x80,sc.work_text,text);
 }
 
 void DrawFilledBar(dword x, y, w, h)
@@ -102,9 +102,9 @@ void DrawFuncButton(dword x,y,width,id,number,text)
 	$int 64
 	DrawBar(x+2+numw, y+2, width-3-numw, FH-3, 0x00AA00);
 	DefineHiddenButton(x+1,y+1,width-2,FH-2,id);
-	text_x = -strlen(text);
+	text_x = strlen(text);
 	text_x *= 6;
-	text_x += width;
+	text_x = width - text_x;
 	text_x /= 2;
 	text_x += x;
 	text_x += 8;
@@ -222,7 +222,7 @@ void DrawPathBarKfm()
 		DrawBar(draw_x, SELECTY,   draw_w-KFM2_DEVH+1, KFM2_DEVH, back_color);
 		DefineHiddenButton(draw_x, SELECTY, draw_w-KFM2_DEVH, KFM2_DEVH-1, BTN_PATH+i);
 		DrawBar(draw_x, SELECTY+KFM2_DEVH, draw_w-KFM2_DEVH+1, 1, sc.line);
-		kfont.WriteIntoWindow(draw_x + 3, math.max((((KFM2_DEVH-kfont.height)/2)+SELECTY),0), 
+		kfont.WriteIntoWindow(draw_x + 3, math.max((KFM2_DEVH - kfont.height) / 2 + SELECTY,0),
 			back_color, text_color, kfont.size.pt, location[i]+strrchr(location[i], '/'));
 		DrawFlatButtonSmall(draw_x+draw_w-KFM2_DEVH+1, SELECTY-1, KFM2_DEVH-1, KFM2_DEVH+1, BTN_BREADCRUMB+i, "\x19");
 		draw_x = Form.cwidth/2 + DDW + 1;
@@ -261,13 +261,13 @@ void DrawBreadCrumbs()
 		btnx = 250-4;
 		btnw = Form.cwidth-278;
 	} else {
-		btnx = (((((Form.cwidth/2)-2)*active_panel)+DDW)+2);
-		btnw = ((((((35*active_panel)+Form.cwidth)/2)-17)-DDW)-2);
+		btnx = (Form.cwidth / 2 - 2) * active_panel + DDW + 2;
+		btnw = (35 * active_panel + Form.cwidth) / 2 - 17 - DDW - 2;
 	}
 
 	for (i=0; i<breadCrumb.count-1; i++) {
 		EDI = breadCrumb.get(i) + #PathShow_path;
-		DrawFlatButtonSmall(btnx, ((((KFM2_DEVH-1)*i)+SELECTY)+KFM2_DEVH), 
+		DrawFlatButtonSmall(btnx, (KFM2_DEVH - 1) * i + SELECTY + KFM2_DEVH,
 			btnw, KFM2_DEVH, i+BREADCRUMB_ID, EDI);
 	}
 }
@@ -294,7 +294,7 @@ void ClickOnBreadCrumb(unsigned clickid)
 
 int DrawEolitePopup(dword b1_text, b2_text)
 {
-	int popin_x = (((files.w-POPIN_W)/2)+files.x) ;
+	int popin_x = (files.w - POPIN_W) / 2 + files.x ;
 	DrawPopup(popin_x, 160, POPIN_W, 95, 1, sc.work, sc.line);
 	DrawCaptButton(popin_x+23+000, 215, 100, 26, POPUP_BTN1, sc.button, sc.button_text, b1_text);
 	DrawCaptButton(popin_x+23+114, 215, 100, 26, POPUP_BTN2, sc.button, sc.button_text, b2_text);

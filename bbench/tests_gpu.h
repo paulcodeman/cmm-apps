@@ -17,8 +17,8 @@ char gpu_text_str[] = "BirdBench benchmark 0123456789ab";
 void DrawLine38(dword x1,y1,x2,y2,color)
 {
 	EAX = 38;
-	EBX = ((x1<<16)+x2);
-	ECX = ((y1<<16)+y2);
+	EBX = (x1 << 16) + x2;
+	ECX = (y1 << 16) + y2;
 	EDX = color;
 	$int 0x40;
 }

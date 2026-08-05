@@ -4,7 +4,7 @@
 #define TOOLBAR_W 136
 #define STATUSBAR_H 20
 #define HEADERH TOOLBAR_ITEM_H + 14
-#define HEADER_TEXTY ((HEADERH-14)/2)
+#define HEADER_TEXTY ((HEADERH - 14) / 2)
 #define CANVASX TOOLBAR_W + PAD + PAD
 #define CANVASY HEADERH + 2
 
@@ -38,9 +38,9 @@ scroll_bar scroll_h = { NULL,TOOLBAR_W+PAD+PAD,15,NULL,15,2,NULL,0,0,COL_DARK,CO
 
 #define DIMTS 6 //dimenshion text size
 char text_w[DIMTS+10], text_h[DIMTS+10]; 
-edit_box edit_w = {((DIMTS+1)*8),08*8+CANVASX+PAD+PAD,HEADER_TEXTY-3,0xEEEeee,0x94AECE,
+edit_box edit_w = {(DIMTS + 1) * 8,08*8+CANVASX+PAD+PAD,HEADER_TEXTY-3,0xEEEeee,0x94AECE,
 	0xEEEeee,0xEEEeee,0x10000000,4,#text_w,0,ed_focus+ed_figure_only};
-edit_box edit_h = {((DIMTS+1)*8),17*8+CANVASX+PAD+PAD+PAD-1,HEADER_TEXTY-3,0xEEEeee,
+edit_box edit_h = {(DIMTS + 1) * 8,17*8+CANVASX+PAD+PAD+PAD-1,HEADER_TEXTY-3,0xEEEeee,
 	0x94AECE,0xEEEeee,0xEEEeee,0x10000000,4,#text_h,0,ed_figure_only};
 
 enum { SAVE_AS_PNG=1, SAVE_AS_BMP=2, SAVE_AS_RAW=4, SAVE_AS_PNM=8 };

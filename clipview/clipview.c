@@ -30,7 +30,7 @@ enum {
 #define LIST_Y 32
 #define PANEL_TOP_H LIST_Y-2
 #define LINE_H 20
-#define TEXT_Y ((LINE_H-14)/2)
+#define TEXT_Y ((LINE_H - 14) / 2)
 
 proc_info Form;
 
@@ -84,7 +84,7 @@ void main()
 		 
 		case evReDraw:
 			sc.get();			
-			DefineAndDrawWindow(((GetScreenWidth()-600)/2),80,600,400,0x73,NULL,"Clipboard Viewer",NULL);
+			DefineAndDrawWindow((GetScreenWidth() - 600) / 2,80,600,400,0x73,NULL,"Clipboard Viewer",NULL);
 			GetProcessInfo(#Form, SelfInfo);
 			IF (Form.status_window&ROLLED_UP) break;
 			IF (Form.height < 200) { MoveSize(OLD,OLD,OLD,200); break; }
@@ -134,16 +134,17 @@ struct clipboard_data
 
 void SelectList_DrawLine(dword i)
 {
-	int yyy, slot_data_type_number;
+	int yyy, slot_data_type_number, row_number, column;
 
 	yyy = i*LINE_H+LIST_Y;
-	DrawBar(GAP, yyy, list.w, LINE_H, -i%2 * 0x0E0E0E + 0xF1F1f1);
+	DrawBar(GAP, yyy, list.w, LINE_H, 0xF1F1f1 - i % 2 * 0x0E0E0E);
 
-	if (list.first + i >= list.count) {
+	row_number = list.first + i;
+	if (row_number >= list.count) {
 		return;
 	}
 
-	slot_data = Clipboard__GetSlotData(list.first + i);
+	slot_data = Clipboard__GetSlotData(row_number);
 	cdata.size = ESDWORD[slot_data];
 	cdata.type = ESDWORD[slot_data+4];
 	if (cdata.type==SLOT_DATA_TYPE_TEXT) || (cdata.type==SLOT_DATA_TYPE_TEXT_BLOCK)
@@ -152,7 +153,8 @@ void SelectList_DrawLine(dword i)
 		cdata.content_offset = 8;
 	cdata.content = slot_data + cdata.content_offset; 
 
-	WriteText(((((((list.first+i)/10)^1)*8)+GAP)+12), yyy+TEXT_Y, 0x90, 0x000000, itoa(list.first + i));
+	column = row_number / 10 ^ 1;
+	WriteText(column * 8 + GAP + 12, yyy+TEXT_Y, 0x90, 0x000000, itoa(row_number));
 	EDX = ConvertSizeToKb(cdata.size);
 	WriteText(GAP+44+16, yyy+TEXT_Y, 0x90, 0x000000, EDX);
 	slot_data_type_number = cdata.type;
@@ -192,7 +194,7 @@ void ClipViewSelectListDraw()
 
 	for (i=0; i<list_last; i++;) SelectList_DrawLine(i); 
 
-	DrawBar(GAP,i*LINE_H+LIST_Y, list.w, -i*LINE_H+ list.h, 0xFFFfff);
+	DrawBar(GAP,i*LINE_H+LIST_Y, list.w, list.h - i * LINE_H, 0xFFFfff);
 	if (!list.count) WriteText(list.w / 2 + GAP - 60, 
 		list.h / 2 - 8 + LIST_Y, 0x90, 0x999999, "No data to show");
 

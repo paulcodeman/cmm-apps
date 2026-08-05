@@ -198,7 +198,7 @@
 	io.count(PATH);
 	if(count!=-1)
 	{      
-		buffer = malloc((((count+1)*304)+32));
+		buffer = malloc((count + 1) * 304 + 32);
 		___ReadDir(count, buffer, PATH);
 		if (options == DIR_ONLYREAL)
 		{

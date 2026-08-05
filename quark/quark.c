@@ -246,7 +246,7 @@ void HandleMouseEvent()
 			}
 
 			//as we have lines of variable width, we need to recalculate column_max
-			list.column_max = lines.len((((mouse.y-list.y)/list.item_h)+list.first));
+			list.column_max = lines.len((mouse.y - list.y) / list.item_h + list.first);
 
 			list.ProcessMouse(mouse.x, mouse.y);
 
@@ -628,7 +628,7 @@ void DrawToolbar()
 	DrawBar(0, 0, Form.cwidth, TOOLBAR_H - 1, sc.work);
 	DrawBar(0, TOOLBAR_H - 1, Form.cwidth, 1, sc.line);
 
-	x.set(-GAP_S+8);
+	x.set(8 - GAP_S);
 	TopBarBt(#EventOpenDialog,     ECTRL+SCAN_CODE_KEY_O, 0,  x.inc(GAP_S), false);
 	TopBarBt(#EventShowFileInfo,   ECTRL+SCAN_CODE_KEY_I, 10, x.inc(GAP_S), false);
 	TopBarBt(#EventMagnifyMinus,   ECTRL+SCAN_CODE_MINUS, 33, x.inc(GAP_B),   false);

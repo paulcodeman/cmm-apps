@@ -35,7 +35,7 @@ unsigned char edge[sizeof(file "img/edge.raw")]= FROM "img/edge.raw"; //292x6
 #define WIN_H RED_LINE_X*LINES_COUNT+HEADER_HEIGHT+4
 
 #define DELETE_BTN 4;
-#define DELETE_W ((sizeof(DELETE_TEXT)+2)*6)
+#define DELETE_W ((sizeof(DELETE_TEXT) + 2) * 6)
 
 #include "engine.h"
 
@@ -97,7 +97,7 @@ void main()
 
 			if (mouse.key&MOUSE_LEFT)&&(mouse.up) 
 			&& (notes.ProcessMouse(mouse.x, mouse.y)) {
-				notebox.pos = ((mouse.x-notebox.left)/6);
+				notebox.pos = (mouse.x - notebox.left) / 6;
 				EventListRedraw();
 				EventActivateLine(notes.cur_y);
 			}
@@ -164,7 +164,7 @@ void DrawCloseButton(dword x,y,w,h)
 	DrawRectangle3D(x+1,y+1,w-2,h-2,0xE6A37F,0xDD8452);
 	PutPixel(x+w-1, y+1, 0xE08C5E);
 	DefineButton(x+1,y+1,w-1,h-1,CLOSE_BTN+BT_HIDE,0);
-	WriteTextB((((-6+w)/2)+x),h/2-4+y,0x80,0xFFFfff,"x");
+	WriteTextB((w - 6) / 2 + x,h/2-4+y,0x80,0xFFFfff,"x");
 }
 
 void draw_window()

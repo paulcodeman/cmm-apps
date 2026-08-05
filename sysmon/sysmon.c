@@ -308,7 +308,7 @@ dword GetTmpDiskFreeSpace(int _id)
 	DIR_SIZE dir_size;
 	sprintf(#param, "/tmp%i/1", _id);
 	dir_size.get(#param);
-	dir_size.sizelo += (((dir_size.files/2)+32)*512); //file attr size + FAT table size
+	dir_size.sizelo += (dir_size.files / 2 + 32) * 512; //file attr size + FAT table size
 	dir_size.sizelo += 1024*1024 - 1; // add this line to round up
 	dir_size.sizelo /= 1024*1024; //convert to MiB
 	return dir_size.sizelo;
@@ -344,8 +344,8 @@ void DrawIconWithText(dword _x, _y, _icon, _title)
 dword GetCpuLoad(dword max_h)
 {
 	dword idle;
-	dword CPU_SEC = ((GetCpuFrequency()>>20)+1);
-	dword IDLE_SEC = ((GetCpuIdleCount()>>20)*max_h);
+	dword CPU_SEC = (GetCpuFrequency() >> 20) + 1;
+	dword IDLE_SEC = (GetCpuIdleCount() >> 20) * max_h;
 
 	EAX = IDLE_SEC;
 	EBX = CPU_SEC;

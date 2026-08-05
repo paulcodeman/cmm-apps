@@ -104,7 +104,7 @@ void main() {
 				DefineAndDrawWindow(430, 150, 460, 343+skin_h,0x34,sc.work,WINDOW_TITLE,0);
 				GetProcessInfo(#Form, SelfInfo);
 				if (Form.status_window&ROLLED_UP) break;
-				mouse_frame.w = - FRAME_X * 2 + Form.cwidth;
+				mouse_frame.w = Form.cwidth - FRAME_X * 2;
 				DefineButton(FRAME_X, FRAME_Y, mouse_frame.w,
 					mouse_frame.h, 99+BT_NOFRAME, 0xF0F2F3); //needed to handle mouse_up and refresh mouse image
 				WriteText(FRAME_X + 110, FRAME_Y + 25, 0x90, 0x2C343C, CHECK_MOUSE_1);

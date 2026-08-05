@@ -141,7 +141,7 @@ void main()
 	LoadIniConfig();
     HandleParam();
 
-	omnibox_edit.left = ((((PADDING+TSZE)*2)+PADDING)+6);
+	omnibox_edit.left = (PADDING + TSZE) * 2 + PADDING + 6;
 	omnibox_edit.top = PADDING+3;
 
 	WB1.list.SetFont(8, 14, 10011000b);
@@ -202,7 +202,7 @@ void main()
 			break;
 
 		case evReDraw:
-			DefineAndDrawWindow((((GetScreenWidth()-WIN_W)/2)-random(80)),(((GetScreenHeight()-WIN_H)/2)-random(80)),
+			DefineAndDrawWindow((GetScreenWidth() - WIN_W) / 2 - random(80),(GetScreenHeight() - WIN_H) / 2 - random(80),
 			//DefineAndDrawWindow(0,0,
 				WIN_W,WIN_H,0x73,0,0,0);
 			GetProcessInfo(#Form, SelfInfo);
@@ -373,7 +373,7 @@ void SetElementSizes()
 	WB1.list.SetSizes(0, TOOLBAR_H+TAB_H, Form.cwidth - scroll_wv.size_x, 
 		Form.cheight - TOOLBAR_H - STATUSBAR_H - TAB_H, BASIC_LINE_H);
 	WB1.list.wheel_size = 7 * BASIC_LINE_H;
-	WB1.list.column_max = (((WB1.list.w-scroll_wv.size_x)/WB1.list.font_w)+1);
+	WB1.list.column_max = (WB1.list.w - scroll_wv.size_x) / WB1.list.font_w + 1;
 	WB1.list.visible = WB1.list.h;
 }
 
@@ -1030,8 +1030,8 @@ dword GetImg(bool _new)
 
 void PageLoaded()
 {
-	DrawStatusBar(sprintf(#param, T_DONE_IN_SEC, ((GetStartTime()-render_start_time)/100), 
-		((GetStartTime()-render_start_time)*10)));	
+	DrawStatusBar(sprintf(#param, T_DONE_IN_SEC, (GetStartTime() - render_start_time) / 100,
+		(GetStartTime() - render_start_time) * 10));
 }
 
 stop:

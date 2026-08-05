@@ -130,7 +130,7 @@ void main()
 	int list_h;
 
 	if (!param) RunProgram("/sys/network/WebView", "http://board.kolibrios.org/viewtopic.php?f=24&t=4233#p74599");
-	
+
 	GetColors();
 
 	GetMenuItems(#param);
@@ -154,15 +154,15 @@ void main()
 	@SetEventMask(EVM_REDRAW + EVM_KEY + EVM_BUTTON + EVM_MOUSE);
 	loop() switch(WaitEvent())
 	{
-		case evMouse:			
+		case evMouse:
 			GetProcessInfo(#Form, SelfInfo);
 			if (!CheckActiveProcess(Form.ID)) exit();
 			mouse.get();
 			if (menu1.MouseOver(mouse.x, mouse.y)) {
 				mouse.y = MoveMouseToHandleSeparators(mouse.y);
 				if (menu1.ProcessMouse(mouse.x, mouse.y)) draw_list();
-				if (mouse.lkm)&&(mouse.up) click();	
-			} 
+				if (mouse.lkm)&&(mouse.up) click();
+			}
 			break;
 
 		case evKey:
@@ -186,7 +186,7 @@ void CorrectLastItem()
 inline ProcessKeys()
 {
 	@GetKeyScancode();
-	switch(AL) 
+	switch(AL)
 	{
 		case SCAN_CODE_ESC:
 			exit();
@@ -195,7 +195,7 @@ inline ProcessKeys()
 			click();
 
 		case SCAN_CODE_DOWN:
-			if (!menu1.KeyDown()) 
+			if (!menu1.KeyDown())
 			|| (menu1.count - menu1.cur_y - GetSeparatorsCount() -1 < 0) menu1.KeyHome();
 			draw_list();
 			break;
@@ -212,14 +212,14 @@ inline ProcessKeys()
 			menu1.KeyEnd();
 			CorrectLastItem();
 			draw_list();
-			break;			
+			break;
 
 		default:
 			if (menu1.ProcessKey(AL)) draw_list();
 	}
 }
 
-void draw_item(int item_y, i, bool active) 
+void draw_item(int item_y, i, bool active)
 {
 	dword name_color;
 	dword hotkey_color;
@@ -232,10 +232,10 @@ void draw_item(int item_y, i, bool active)
 		name_color = sc.work_text;
 		hotkey_color = sc.line;
 		DrawBar(menu1.x, item_y, menu1.w, ITEM_H, inactive_background_color);
-		if (!skin_dark) WriteText(TEXT_MARGIN+1, item_y + menu1.text_y +1, TEXT_FONT_TYPE, 
+		if (!skin_dark) WriteText(TEXT_MARGIN+1, item_y + menu1.text_y +1, TEXT_FONT_TYPE,
 			inactive_text_shadow_color, real_names.get(i));
 	}
-	WriteText(-strlen(hotkeys.get(i))*FONT_WIDTH + menu_w - TEXT_MARGIN, 
+	WriteText(menu_w - strlen(hotkeys.get(i)) * FONT_WIDTH - TEXT_MARGIN,
 		item_y + menu1.text_y, TEXT_FONT_TYPE, hotkey_color, hotkeys.get(i));
 	WriteText(TEXT_MARGIN, item_y + menu1.text_y, TEXT_FONT_TYPE, name_color, real_names.get(i));
 }
@@ -266,17 +266,17 @@ void draw_list()
 				draw_item(item_y, item_i, false);
 			}
 			item_y += ITEM_H;
-			item_i++;		
+			item_i++;
 		}
-	} else {	
+	} else {
 		//here we use "item_y_mas" and draw only changed items
 		draw_item(item_y_mas[old_y], old_y, false);
 		draw_item(item_y_mas[menu1.cur_y], menu1.cur_y, true);
-		old_y = menu1.cur_y;		
+		old_y = menu1.cur_y;
 	}
 
 	init = false;
-	if (selected) WriteText(5, (((((selected-1)*ITEM_H)+menu1.y)+menu1.text_y)+3), 0x80, 0xEE0000, "\x10"); // ?
+	if (selected) WriteText(5, (selected - 1) * ITEM_H + menu1.y + menu1.text_y + 3, 0x80, 0xEE0000, "\x10"); // ?
 }
 
 void click()

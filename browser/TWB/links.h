@@ -5,7 +5,7 @@ dword CursorFile = FROM "TWB/pointer.cur";
 struct PAGE_LINKS {
 	collection unic_links;
 	collection element_links;
-	
+
 	collection_int x;
 	collection_int y;
 	collection_int w;
@@ -59,13 +59,13 @@ void PAGE_LINKS::draw_underline(signed _id, dword list_first, list_y, color)
 {
 	int i;
 	if (_id == -1) return;
-	for (i=0; i<id.count; i++) 
+	for (i=0; i<id.count; i++)
 	{
-		if (id.get(i) - id.get(_id) == 0) 
+		if (id.get(i) - id.get(_id) == 0)
 		&& (y.get(i) + h.get(i) - list_first > list_y) {
-			DrawBar(x.get(i), y.get(i) + h.get(i) - list_first, 
+			DrawBar(x.get(i), y.get(i) + h.get(i) - list_first,
 				w.get(i), underline_h.get(i), color);
-		}		
+		}
 	}
 }
 
@@ -79,7 +79,7 @@ bool PAGE_LINKS::hover(dword list_y, list_first)
 	//Here we check is any link hovered
 	for (i=0; i<id.count; i++)
 	{
-		if (mx>x.get(i)) && (my>y.get(i)) 
+		if (mx>x.get(i)) && (my>y.get(i))
 		&& (mx<x.get(i)+w.get(i)) && (my<y.get(i)+h.get(i))
 		&& (my>list_y+list_first)
 		{
@@ -87,7 +87,7 @@ bool PAGE_LINKS::hover(dword list_y, list_first)
 				CursorPointer.Load(#CursorFile);
 				CursorPointer.Set();
 
-				draw_underline(active, list_first, list_y, link_color_default);			
+				draw_underline(active, list_first, list_y, link_color_default);
 				draw_underline(i, list_first, list_y, DEFAULT_BG_COL);
 
 				active_url = element_links.get(i);
@@ -95,7 +95,7 @@ bool PAGE_LINKS::hover(dword list_y, list_first)
 				DrawStatusBar(active_url);
 			}
 			if (mouse.lkm) && (mouse.down) {
-				DrawRectangle(x.get(active), -list_first + y.get(active), 
+				DrawRectangle(x.get(active), y.get(active) - list_first,
 					w.get(active), h.get(active), 0);
 			}
 			return true;

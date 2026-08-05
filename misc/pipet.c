@@ -131,7 +131,7 @@ void EventUpdateWindowContent()
 void EventActivatePick()
 {
 	DrawBar(PICKED_X, PAD+2, PICKED_SIZE, PICKED_SIZE, COLOR_PANE_BG);
-	WriteTextWithBg(((((-4*8)+PICKED_SIZE)/2)+PICKED_X), PICKED_SIZE/2+PAD-5, 0xD0, 0x000111, "Pick", COLOR_PANE_BG);
+	WriteTextWithBg((PICKED_SIZE - 4 * 8) / 2 + PICKED_X, PICKED_SIZE/2+PAD-5, 0xD0, 0x000111, "Pick", COLOR_PANE_BG);
 }
 
 void EventCopyHex()

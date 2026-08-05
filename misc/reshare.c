@@ -187,7 +187,7 @@ void DrawFlatButton(dword _x, _y, _text, _id, _active)
 	DrawBar(_x, _y, BTNW, BTNH+1, EDX);
 
 	if (_active) EDX = sc.button_text; else EDX = sc.work_text;
-	WriteText(((((-strlen(_text)*8)+BTNW)/2)+_x), _y+6, 0x90, EDX, _text);
+	WriteText((BTNW - strlen(_text) * 8) / 2 + _x, _y+6, 0x90, EDX, _text);
 
 	PutPixel(_x,_y,sc.work);
 	PutPixel(_x,_y+BTNH,EDX);
@@ -199,11 +199,11 @@ void DrawFlatButton(dword _x, _y, _text, _id, _active)
 
 void draw_tabs()
 {
-	#define TABX ((((((((WINW-BTNW)-PAD)-BTNW)-PAD)-BTNW)-PAD)-BTNW)/2)
+	#define TABX ((WINW - BTNW - PAD - BTNW - PAD - BTNW - PAD - BTNW) / 2)
 	DrawFlatButton(           TABX, PAD+30, "ICONS32",  10+ACTIVE_ICONS32, active_tab & ACTIVE_ICONS32);
-	DrawFlatButton((((PAD+BTNW)*1)+TABX), PAD+30, "ICONS18",  10+ACTIVE_ICONS18, active_tab & ACTIVE_ICONS18);
-	DrawFlatButton((((PAD+BTNW)*2)+TABX), PAD+30, "ICONS18W", 10+ACTIVE_ICONS18W, active_tab & ACTIVE_ICONS18W);
-	DrawFlatButton((((PAD+BTNW)*3)+TABX), PAD+30, "CHECKBOX", 10+ACTIVE_CHECKBOX, active_tab & ACTIVE_CHECKBOX);
+	DrawFlatButton((PAD + BTNW) * 1 + TABX, PAD+30, "ICONS18",  10+ACTIVE_ICONS18, active_tab & ACTIVE_ICONS18);
+	DrawFlatButton((PAD + BTNW) * 2 + TABX, PAD+30, "ICONS18W", 10+ACTIVE_ICONS18W, active_tab & ACTIVE_ICONS18W);
+	DrawFlatButton((PAD + BTNW) * 3 + TABX, PAD+30, "CHECKBOX", 10+ACTIVE_CHECKBOX, active_tab & ACTIVE_CHECKBOX);
 	draw_tab_icons32();
 }
 
@@ -229,15 +229,15 @@ void draw_tab_icons32()
 		iconw = icons18.w;
 		iconh = icons18.h;
 	} else {
-		PutImage(((WINW-13)/2), ((((WINH-RESY)-13)/2)+RESY), 13, 13, #checkbox_flag);
+		PutImage((WINW - 13) / 2, (WINH - RESY - 13) / 2 + RESY, 13, 13, #checkbox_flag);
 		return;
 	}
 	if (!iconimg) || (!iconw) return;
 
 	for (i = 0; i < iconh/iconw; i++)
 	{
-		PutPaletteImage(iconw*iconw*4*i + iconimg, iconw, iconw, (((50-iconw)/2)+x), y+RESY, 32, 0);
-		WriteText(((((-strlen(itoa(i))*8)+50)/2)+x), y+RESY+iconw+5, 0x90, sc.line, itoa(i));
+		PutPaletteImage(iconw*iconw*4*i + iconimg, iconw, iconw, (50 - iconw) / 2 + x, y+RESY, 32, 0);
+		WriteText((50 - strlen(itoa(i)) * 8) / 2 + x, y+RESY+iconw+5, 0x90, sc.line, itoa(i));
 		x += 50;
 		if (x + 50 > WINW) {
 			x = PAD;

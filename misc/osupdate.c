@@ -101,13 +101,13 @@ void main()
 void draw_window()
 {
 	sc.get();
-	DefineAndDrawWindow(((screen.w-WINW)/2),((screen.h-WINH)/2),
+	DefineAndDrawWindow((screen.w - WINW) / 2,(screen.h - WINH) / 2,
 		WINW+9,WINH+skin_h,0x34,sc.work,T_WINDOW_TITLE,0);
 	WriteText(30, 20, 0x91, 0xEC008C, T_TITLE_H1);
 	if (!install_complete) {
 			if (GetProcessSlot(unimg_id)) {
 				//UNPACKING
-				draw_icon_32(((WINW-32)/2), 140, sc.work, 89);
+				draw_icon_32((WINW - 32) / 2, 140, sc.work, 89);
 				WriteTextCenter(0, 185, WINW, sc.work_text, T_UNPACKING);
 			} else if (http.transfer<=0) {
 				//INTRO
@@ -116,15 +116,15 @@ void draw_window()
 				keep_settings.draw(30, WINH-65);
 			} else {
 				//DOWNLOADING
-				draw_icon_32(((WINW-32)/2), 140, sc.work, 51);
+				draw_icon_32((WINW - 32) / 2, 140, sc.work, 51);
 				WriteTextCenter(0, 185, WINW, sc.work_text, T_DOWNLOADING);
 				progress.draw_wrapper();
 			}
 	} else {
 				//COMPLETE
-				draw_icon_32(((WINW-32)/2), 140, sc.work, 49);
+				draw_icon_32((WINW - 32) / 2, 140, sc.work, 49);
 				WriteTextCenter(0, 185, WINW, sc.work_text, T_COMPLETE);
-				DrawCaptButton(((WINW-110)/2), WINH-70, 110, 28, 2, 
+				DrawCaptButton((WINW - 110) / 2, WINH-70, 110, 28, 2,
 					0x0092D8, 0xFFFfff, T_EXIT);
 	}
 }
@@ -154,7 +154,7 @@ signed CheckFreeSpace(dword _latest, _combined)
 
 	empty = GetFreeSpaceOfRamdisk();
 
-	return (((cur_size+empty)-new_size)/1024);
+	return (cur_size + empty - new_size) / 1024;
 }
 
 void EventDownloadComplete()

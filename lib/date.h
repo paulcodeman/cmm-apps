@@ -26,8 +26,8 @@
 	EDI = _date;
 	EAX = 47;
 	EBX = 2<<16;
-	EDX = ((x<<16)+y);
-	ESI = ((0x90<<24)+color);
+	EDX = (x << 16) + y;
+	ESI = (0x90 << 24) + color;
 	ECX = EDI.date.day;
 	$int 64
 	EDX += 24<<16;

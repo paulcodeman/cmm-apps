@@ -189,8 +189,8 @@ dword SingleDataTransfer(dword command, binary)
 	dword Rn = #reg;
 	dword offset = 0;
 
-	Rd += (((command>>12)&0xF)<<2);
-	Rn += (((command>>16)&0xF)<<2);
+	Rd += (command >> 12 & 0xF) << 2;
+	Rn += (command >> 16 & 0xF) << 2;
 	offset = command & 0xFFF;
 	IF (command >> 16 & 0xF != 15) IF (command & 0x800000 == 0) $neg offset;
 	
@@ -230,15 +230,15 @@ dword DataProcessing(dword command) // Data Processing / PSR Transfer
 	word context = 0;
 	byte typeSdvig = 0;
 	opcode = command >> 21 & 0xF;
-	Rd += (((command>>12)&0xF)<<2);
-	Rn += (((command>>16)&0xF)<<2);
+	Rd += (command >> 12 & 0xF) << 2;
+	Rn += (command >> 16 & 0xF) << 2;
 	context = command & 0xFFF;
 
 	IF (command & 0x2000000) operand = context;
-	ELSE operand = DSDWORD[(((context&1111b)<<2)+#reg)];
+	ELSE operand = DSDWORD[((context & 1111b) << 2) + #reg];
 	
 	typeSdvig = context >> 5 & 11b;
-	IF (context & 10000b) sdvig = DSBYTE[((((context>>8)&1111b)<<2)+#reg)];
+	IF (context & 10000b) sdvig = DSBYTE[((context >> 8 & 1111b) << 2) + #reg];
 	ELSE sdvig = context >> 7 & 11111b;
 
 	switch (typeSdvig) // type sdvig

@@ -58,7 +58,7 @@ struct llist
 	w = ww;
 	h = hh;
 	item_h = item_hh;
-	text_y = ((item_h-font_h)/2);
+	text_y = (item_h - font_h) / 2;
 	visible = h / item_h;
 	wheel_size = 3;
 	CheckDoesValuesOkey();
@@ -105,7 +105,7 @@ struct llist
 	int new_cur_y, new_cur_x, ret=0;
 	if (MouseOver(xx, yy))
 	{
-		new_cur_y = (((yy-y)/item_h)+first);
+		new_cur_y = (yy - y) / item_h + first;
 		if (new_cur_y != cur_y) && (new_cur_y<count)
 		{
 			cur_y = new_cur_y;
@@ -113,7 +113,7 @@ struct llist
 		}
 		if (horisontal_selelection) 
 		{		
-			new_cur_x = ((xx-x)/item_w);
+			new_cur_x = (xx - x) / item_w;
 			if (new_cur_x != cur_x) && (new_cur_x<column_max)
 			{
 				cur_x = new_cur_x;

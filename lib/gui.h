@@ -69,7 +69,7 @@
 
 :void DrawCaptButton(dword x,y,w,h,id,color_b, color_t,text)
 {
-	dword tx = (((((-strlen(text)*8)+w)/2)+x)+1);
+	dword tx = (w - strlen(text) * 8) / 2 + x + 1;
 	dword ty = h/2-6+y;
 	DefineButton(x,y,w,h,id,color_b);
 	WriteText(tx+1,ty+1,0x90,MixColors(color_b,0,230),text);
@@ -121,7 +121,7 @@
 
 :void WriteTextCenter(dword x,y,w,color_t,text)
 {
-	WriteText((((((-strlen(text)*6)+w)/2)+x)+1),y,0x80,color_t,text);
+	WriteText((w - strlen(text) * 6) / 2 + x + 1,y,0x80,color_t,text);
 }
 
 :void DrawCircle(int x, y, r, color)
@@ -132,7 +132,7 @@
 	{
         PutPixel(px + x, y - py, color);
         px = py / r + px;
-        py = -px / r + py;
+        py = py - px / r;
 	}
 }
 
@@ -192,7 +192,7 @@
 
 	if (progress_percent>0) && (progress_percent<=100)
 	{
-		progress_w = (((st_w-3)*progress_percent)/100);
+		progress_w = (st_w - 3) * progress_percent / 100;
 		DrawBar(st_x+2, st_y+2, progress_w, st_h-3, col_fill);
 		DrawBar(st_x+2+progress_w, st_y+2, st_w-progress_w-3, st_h-3, 0xFFFfff);
 	}

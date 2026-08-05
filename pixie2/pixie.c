@@ -246,7 +246,7 @@ void DrawPlayList()
 		if (kfont_width>skin.w-15) DrawBar(skin.w-1, yyy, 1, list.item_h, theme.color_list_border);
 	}
 	DrawBar(list.x,list.visible * list.item_h + list.y, list.w, 
-		-list.visible * list.item_h + list.h, theme.color_list_bg);
+		list.h - list.visible * list.item_h, theme.color_list_bg);
 	DrawScroller();
 }
 
