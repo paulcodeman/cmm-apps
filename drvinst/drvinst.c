@@ -47,6 +47,7 @@ proc_info Form;
 #define BUTTON_ID_ASSEPT_RISK 10
 #define BUTTON_ID_README 11
 #define BUTTON_ID_INSTALL 12
+#define T_NO_DRIVER_DATA "No driver data"
 
 //WINDOW STEPS
 #define WINDOW_STEP_INTRO 1;
@@ -143,8 +144,14 @@ void Draw_DriverListWindow()
 	SelectList_Draw();
 	SelectList_DrawBorder();
 	//RIGHT FRAME
-	GetCurrentSectionData();
 	DrawBar(right_frame_x, PADDING+3, Form.cwidth - right_frame_x - PADDING, 80, sc.work);
+	if (!ini_sections.count)
+	{
+		WriteTextB(right_frame_x+12, PADDING+3, 0x81, sc.work_text, T_NO_DRIVER_DATA);
+		WriteText(right_frame_x+12, PADDING+23, 0x80, sc.work_text, #drvinf_path);
+		return;
+	}
+	GetCurrentSectionData();
 	draw_icon_32(right_frame_x, PADDING, sc.work, cur_icon);
 	WriteTextB(right_frame_x+44, PADDING+3, 0x81, sc.work_text, ini_sections.get(select_list.cur_y));
 	WriteText(right_frame_x+44, PADDING+23, 0x80, sc.work_text, #cur_version);
@@ -218,18 +225,20 @@ void Event_DrawWindow()
 void Event_AsseptRisk()
 {
 	window_step = WINDOW_STEP_DRIVER_LIST;
-	active_button_id = BUTTON_ID_INSTALL;
+	if (ini_sections.count) active_button_id = BUTTON_ID_INSTALL; else active_button_id = 0;
 	Event_DrawWindow();
 }
 
 void Event_ShowReadme()
 {
+	if (!ini_sections.count) return;
 	io.run("/sys/@open", #cur_readme_path);
 }
 
 void Event_RunInstall()
 {
 	int result;
+	if (!ini_sections.count) return;
 	result = io.run(#cur_install_path, NULL);
 	if (result) notify(T_DRIVER_INSTALLARION_STARTED);
 	pause(300);
