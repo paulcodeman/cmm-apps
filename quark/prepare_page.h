@@ -19,7 +19,7 @@ int line_end;
 
 	for (ptr = textbuf.p;    ptr < textbuf.p + textbuf.len;    ptr++)
 	{
-		if (ptr - lines.get_last() * list.font_w + 16 >= list.w)
+		if ((((ptr-lines.get_last())*list.font_w)+16) >= list.w)
 		{
 			//searching a 'white' for a normal word-break
 			for(line_end = ptr; line_end != lines.get_last(); line_end--) 			{
