@@ -165,12 +165,15 @@ libimg_image icons18;
 void main()
 {
 	word btn;
+	dword icons_path;
 	libimg_image open_image;
 
 	load_dll(libimg, #libimg_init, 1);
 	load_dll(boxlib, #box_lib_init,0);
 
-	icons18.load("/sys/icons18.png");
+	icons_path = "/sys/icons18.png";
+	if (!file_exists(icons_path)) icons_path = "/sys/icons16.png";
+	icons18.load(icons_path);
 	leftbar_w = icons18.w + 16;
 
 	sc.get();
@@ -301,7 +304,7 @@ void DrawTopPanelButton1(dword _event, _hotkey, _x, _icon_n)
 	#define ISIZE 18
 	#define YPOS 6
 	DefineHiddenButton(_x-4, YPOS-4, ISIZE+7, ISIZE+7, button.add(_event));
-	img_draw stdcall(icons18.image, _x, YPOS, ISIZE, ISIZE, 0, _icon_n*ISIZE);
+	if (icons18.image) img_draw stdcall(icons18.image, _x, YPOS, icons18.w, icons18.w, 0, _icon_n*icons18.w);
 	if (_hotkey) key.add_n(_hotkey, _event);
 }
 
@@ -325,7 +328,7 @@ void DrawLeftPanelButton(dword _event, _hotkey, _y, _icon_n)
 	int x = 5;
 	DrawRectangle(x, _y, icons18.w + 5, icons18.w + 5, sc.work);
 	DefineHiddenButton(x, _y, icons18.w + 5, icons18.w + 5, button.add(_event));
-	img_draw stdcall(icons18.image, x+3, _y+3, icons18.w, 
+	if (icons18.image) img_draw stdcall(icons18.image, x+3, _y+3, icons18.w,
 		icons18.w, 0, _icon_n*icons18.w);
 	key.add_n(_hotkey, _event);
 }
