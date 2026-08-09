@@ -38,7 +38,7 @@ int main(dword argc, dword argv)
     debug_character(10);
     for (index = 0; index < argc; index++) {
         argument = DSDWORD[argv + index * 4];
-        /* KolibriOS may prefix UTF-8 paths in argv[0] with slash, byte 3, slash. */
+        // KolibriOS may prefix UTF-8 paths in argv[0] with slash, byte 3, slash.
         debug_string(argument);
         debug_character(10);
     }
